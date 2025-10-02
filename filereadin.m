@@ -62,8 +62,8 @@ for i=1:5
     % elseif (b{1} == "Brass") && (b{2} == "30V") && (b{3} == "285mA")
     % elseif (b{1} == "Brass") && (b{2} == "25V") && (b{3} == "237mA")
     % elseif (b{1} == "Steel") && (b{2} == "22V") && (b{3} == "203mA")
-    else
-        disp("Error: Incorrect material properties")
+    % else
+    %     disp("Error: Incorrect material properties")
     end
 
 end
