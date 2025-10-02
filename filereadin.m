@@ -6,9 +6,9 @@ close all;
 
 %material properties
 %order: Al, Br, St
-density = [2810;8500;8000]; %kg/m^3
-c_p = [960;380;500]; %J/kgK
-k = [130;115;16.2]; %W/mK
+density = [2810;8500;8000]; %kg/m^3 
+c_p = [960;380;500]; %J/kgK % specific heat
+k = [130;115;16.2]; %W/m*K % thermal conductivity
 alpha = k./(density.*c_p); %thermal diffusivity
 
 %dimensions
@@ -21,7 +21,7 @@ cross_sec = pi * ((diameter/2)^2);
 %length = [x0,(0.0762:0.0127:0.1651)]; %m
 
 %%
-folder = 'ASEN3802_HeatConduction_FA25';
+folder = '3802Lab2_data';
 a = dir(fullfile(folder));   % struct of .mat files
 
 a(1:2) = [];
@@ -43,7 +43,7 @@ for i=1:5
 
     if (b{1} == "Aluminum") && (b{2} == "25V") && (b{3} == "240mA")
         length = linspace(x0,0.1651,length(data(:,2)));
-        p = polyfit(length,data(:,2),3);
+        [p,error] = polyfit(length,data(:,2),3);
         y1 = polyval(p,length);
         figure;
         plot(length,y1)
