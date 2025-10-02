@@ -42,26 +42,100 @@ for i=1:5
         temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
 
         %fitting
-        p = polyfit(length,temp_time0,2);
+        p = polyfit(length,temp_time0,1);
         y1 = polyval(p,length);
-
-        %extract T0
-        T0 = y1(1); %deg C
 
         %plot
         figure;
         hold on;
+        %plot(length,temp_time0)
         plot(length,y1)
         xlabel("Length along rod (m)")
         ylabel("Temp (deg C)")
 
+        %extract T0
+        
+
         %calculating H_an
+        H_an = (25 * 240e-3) / (k(1) * cross_sec);
         
 
     % elseif (b{1} == "Aluminum") && (b{2} == "30V") && (b{3} == "290mA")
+    %     %temp from thermocouples at t=0
+    %     temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
+    % 
+    %     %fitting
+    %     p = polyfit(length,temp_time0,2);
+    %     y1 = polyval(p,length);
+    % 
+    %     %extract T0
+    %     T0 = y1(1); %deg C
+    % 
+    %     %plot
+    %     figure;
+    %     hold on;
+    %     plot(length,y1)
+    %     xlabel("Length along rod (m)")
+    %     ylabel("Temp (deg C)")
+    % 
+    %     %calculating H_an
     % elseif (b{1} == "Brass") && (b{2} == "30V") && (b{3} == "285mA")
+    %     %temp from thermocouples at t=0
+    %     temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
+    % 
+    %     %fitting
+    %     p = polyfit(length,temp_time0,2);
+    %     y1 = polyval(p,length);
+    % 
+    %     %extract T0
+    %     T0 = y1(1); %deg C
+    % 
+    %     %plot
+    %     figure;
+    %     hold on;
+    %     plot(length,y1)
+    %     xlabel("Length along rod (m)")
+    %     ylabel("Temp (deg C)")
+    % 
+    %     %calculating H_an
     % elseif (b{1} == "Brass") && (b{2} == "25V") && (b{3} == "237mA")
+    %     %temp from thermocouples at t=0
+    %     temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
+    % 
+    %     %fitting
+    %     p = polyfit(length,temp_time0,2);
+    %     y1 = polyval(p,length);
+    % 
+    %     %extract T0
+    %     T0 = y1(1); %deg C
+    % 
+    %     %plot
+    %     figure;
+    %     hold on;
+    %     plot(length,y1)
+    %     xlabel("Length along rod (m)")
+    %     ylabel("Temp (deg C)")
+    % 
+    %     %calculating H_an
     % elseif (b{1} == "Steel") && (b{2} == "22V") && (b{3} == "203mA")
+    %     %temp from thermocouples at t=0
+    %     temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
+    % 
+    %     %fitting
+    %     p = polyfit(length,temp_time0,2);
+    %     y1 = polyval(p,length);
+    % 
+    %     %extract T0
+    %     T0 = y1(1); %deg C
+    % 
+    %     %plot
+    %     figure;
+    %     hold on;
+    %     plot(length,y1)
+    %     xlabel("Length along rod (m)")
+    %     ylabel("Temp (deg C)")
+    % 
+    %     %calculating H_an
     % else
     %     disp("Error: Incorrect material properties")
     end
