@@ -17,8 +17,6 @@ diameter = 0.0254; %m
 delta_x = 0.0254; %m
 cross_sec = pi * ((diameter/2)^2);
 
-%length from x0 to the point where power supply starts
-length = [x0,(0.0762:0.0127:0.1651)]; %m
 
 %%
 folder = '3802Lab2_data';
@@ -32,26 +30,46 @@ for i=1:5
     b = strsplit(a(i).name,'_'); % gives a cell array (b) that is 1x3
 
     % {'material','voltsV','ampsmA'} -- now split by 'V' and 'mA'
-    % v = strsplit(b{2},'V'); % volts are always in the second portion
-    % ampval= strsplit(b{3},'mA'); % amps are always in the third portion
-    % volts(i) = str2num(v{1}); % convert string to number (vector)
-    % amps(i) = str2num(ampval{1});
+    v = strsplit(b{2},'V'); % volts are always in the second portion
+    ampval= strsplit(b{3},'mA'); % amps are always in the third portion
+    volts(i) = str2num(v{1}); % convert string to number (vector)
+    amps(i) = str2num(ampval{1});
 
     if (b{1} == "Aluminum") && (b{2} == "25V") && (b{3} == "240mA")
         %temp from thermocouples at t=0
         temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
-        T0 = mean(temp_time0);
+        length = linspace(0,0.2159,length(temp_time0));
+
+        %fitting
+        p = polyfit(length,temp_time0,1);
+        y1 = polyval(p,length);
+
+        %plot
+        figure;
+        hold on;
+        plot(length,y1)
+        xlabel("Length along rod (m)")
+        ylabel("Temp (deg C)")
+        title('Aluminum 25V 240mA')
+
+        %extract T0
+        T0 = y1(1); %deg C
 
         %calculating H_an
-        H_an = (25 * 240e-3) / (k(1) * cross_sec);
+        H_an = (volts(i) * amps(i)) / (k(1) * cross_sec);
+
+        %calculating H_exp
+        temp_time_end = [data(end,2),data(end,2),data(end,3),data(end,4),data(end,5),data(end,6),data(1,7),data(1,8),data(1,9)];
+
         
 
     % elseif (b{1} == "Aluminum") && (b{2} == "30V") && (b{3} == "290mA")
     %     %temp from thermocouples at t=0
     %     temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
+    %     length = linspace(0,0.2159,length(temp_time0));
     % 
     %     %fitting
-    %     p = polyfit(length,temp_time0,2);
+    %     p = polyfit(length,temp_time0,1);
     %     y1 = polyval(p,length);
     % 
     %     %extract T0
@@ -63,14 +81,17 @@ for i=1:5
     %     plot(length,y1)
     %     xlabel("Length along rod (m)")
     %     ylabel("Temp (deg C)")
+    %     title('Aluminum 30V 290mA')
     % 
     %     %calculating H_an
     % elseif (b{1} == "Brass") && (b{2} == "30V") && (b{3} == "285mA")
     %     %temp from thermocouples at t=0
     %     temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
+    %     length = linspace(0,0.2159,length(temp_time0));
+    % 
     % 
     %     %fitting
-    %     p = polyfit(length,temp_time0,2);
+    %     p = polyfit(length,temp_time0,1);
     %     y1 = polyval(p,length);
     % 
     %     %extract T0
@@ -82,8 +103,9 @@ for i=1:5
     %     plot(length,y1)
     %     xlabel("Length along rod (m)")
     %     ylabel("Temp (deg C)")
-    % 
-    %     %calculating H_an
+    %     title('Brass 25V 237mA')
+
+        %calculating H_an
     % elseif (b{1} == "Brass") && (b{2} == "25V") && (b{3} == "237mA")
     %     %temp from thermocouples at t=0
     %     temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
