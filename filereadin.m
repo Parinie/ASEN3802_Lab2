@@ -6,9 +6,9 @@ close all;
 
 %material properties
 %order: Al, Br, St
-density = [2810;8500;8000]; %kg/m^3 
-c_p = [960;380;500]; %J/kgK % specific heat
-k = [130;115;16.2]; %W/m*K % thermal conductivity
+density = [2810;8500;8000]; %kg/m^3
+c_p = [960;380;500]; %J/kgK
+k = [130;115;16.2]; %W/mK themal conductivity
 alpha = k./(density.*c_p); %thermal diffusivity
 
 %dimensions
@@ -18,7 +18,7 @@ delta_x = 0.0254; %m
 cross_sec = pi * ((diameter/2)^2);
 
 %length from x0 to the point where power supply starts
-%length = [x0,(0.0762:0.0127:0.1651)]; %m
+length = [x0,(0.0762:0.0127:0.1651)]; %m
 
 %%
 folder = '3802Lab2_data';
@@ -28,27 +28,35 @@ a(1:2) = [];
 
 for i=1:5
     data = readmatrix(fullfile(folder, a(i).name));
-    % how to get voltage and amperage from file names?
-    % - options include strsplit, regex, etc.
-    % ultimately, we need to use the format of each file name
-    % 'material'_'volts'V_'amps'mA
+    
     b = strsplit(a(i).name,'_'); % gives a cell array (b) that is 1x3
+
     % {'material','voltsV','ampsmA'} -- now split by 'V' and 'mA'
-
-
     % v = strsplit(b{2},'V'); % volts are always in the second portion
     % ampval= strsplit(b{3},'mA'); % amps are always in the third portion
     % volts(i) = str2num(v{1}); % convert string to number (vector)
     % amps(i) = str2num(ampval{1});
 
     if (b{1} == "Aluminum") && (b{2} == "25V") && (b{3} == "240mA")
-        length = linspace(x0,0.1651,length(data(:,2)));
-        [p,error] = polyfit(length,data(:,2),3);
+        %temp from thermocouples at t=0
+        temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
+
+        %fitting
+        p = polyfit(length,temp_time0,2);
         y1 = polyval(p,length);
+
+        %extract T0
+        T0 = y1(1); %deg C
+
+        %plot
         figure;
+        hold on;
         plot(length,y1)
         xlabel("Length along rod (m)")
         ylabel("Temp (deg C)")
+
+        %calculating H_an
+        
 
     % elseif (b{1} == "Aluminum") && (b{2} == "30V") && (b{3} == "290mA")
     % elseif (b{1} == "Brass") && (b{2} == "30V") && (b{3} == "285mA")
