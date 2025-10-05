@@ -1,6 +1,9 @@
+
 clear;
 clc;
 close all;
+
+%Author: Parinie Gupta
 
 %% declare variables
 
