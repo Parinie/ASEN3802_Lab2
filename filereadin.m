@@ -14,9 +14,11 @@ alpha = k./(density.*c_p); %thermal diffusivity
 %dimensions
 x0 = 0.034925; %m
 diameter = 0.0254; %m
-delta_x = 0.0254; %m
+delta_x = 0.0127; %m
 cross_sec = pi * ((diameter/2)^2);
-
+rod_length = 0.180975; % m
+%thermocouple locations
+tc_loc = 0.0762 + (0:7)*delta_x;
 
 %%
 folder = '3802Lab2_data';
@@ -36,212 +38,421 @@ for i=1:5
     amps(i) = str2num(ampval{1});
 
     if (b{1} == "Aluminum") && (b{2} == "25V") && (b{3} == "240mA")
-        %temp from thermocouples at t=0
-        temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
-        l_time0 = linspace(0,0.180975,length(temp_time0));
+        %Task 1
+        %NOTE: Polyfit gives 2 arguments: first is slope and second is
+        %intercept
 
-        %fitting
-        p1 = polyfit(l_time0,temp_time0,1);
-        y1 = polyval(p1,l_time0);
-
-        %plot
-        figure;
-        grid("on")
-        hold on;
-        plot(l_time0,y1,LineWidth=2)
-        ylim([16.6,16.7]);
-        xlabel("Length along rod (m)")
-        ylabel("Temp (deg C)")
-        title('Aluminum 25V 240mA')
-        subtitle('Initial State')
-
-        %extract T0
-        T0(i) = y1(1); %deg C
-
-        %calculating H_an
-        %H_an = VI/kA
-        H_an(i) = (volts(i) * amps(i)) / (k(1) * cross_sec);
+        %defining entire length of rod
+        l_steady = linspace(0,rod_length,100);
 
         %steady state temp
-        steady_temp = [data(end,2),data(end,2),data(end,3),data(end,4),data(end,5),data(end,6),data(end,7),data(end,8)];
-        l_steady = linspace(0,0.180975,length(steady_temp));
-        p2 = polyfit(l_steady,steady_temp,1);
-        y2 = polyval(p2,l_steady);
-        figure;
-        hold on;
-        grid("on")
-        plot(l_steady,y2,LineWidth=2)
-        xlabel("Length along rod (m)")
-        ylabel("Temp (deg C)")
-        title('Aluminum 25V 240mA')
-        subtitle('Steady State')
+        steady_temp = [data(end-2,2:9)];
+        
+        %fitting
+        [p1,S1] = polyfit(tc_loc,steady_temp,1);
+        y1 = polyval(p1,l_steady);
 
         %calculating H_exp
+        H_exp(i) = p1(1); %degC/m
+
+        %extract T0 from polyfit (intercept)
+        T0(i) = p1(2); %deg C
+
+        %calculating H_an
+        %H_an = VI/kA
+        H_an(i) = (volts(i) * (amps(i)/1000)) / (k(1) * cross_sec); %degC/m
+
+        %plotting steady state temp starting from x0
+        figure;
+        hold on;
+        grid("on")
+        %plotting with H_exp slope
+        plot(l_steady,y1,LineWidth=2)
+        %plot with H_an slope
+        plot(l_steady,(H_an(i).*l_steady)+T0(i),'k',LineWidth=2)
+        %marking TC locations
+        plot(tc_loc, steady_temp, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
+        xlabel("Length along rod (m)")
+        ylabel("Temp (°C)")
+        legend('H_{exp}','H_{an}','TC Data')
+        title('Aluminum 25V 240mA')
+        subtitle('Steady State')
+
+        %saving figures
+        fname = sprintf('steady_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
+
+        %Task 2
+        %assuming T0 is the first TC temp
+        T0_init = data(1,2);
+
+        %temp from thermocouples at t=0
+        temp_init = [data(1,2:9)];
+
+        %defining entire length of rod
+        l_init = linspace(0,rod_length,100);
+
+        %fitting
+        [p2,S2] = polyfit(tc_loc,temp_init,1);
+        y2 = polyval(p2,l_init);
+
+        %extracting M_exp
+        M_exp(i) = p2(1);
+
+        %plot
+        figure;
+        grid("on")
+        hold on;
+        %plotting with M_exp slope
+        plot(l_init,y2,LineWidth=2)
+        %marking TC locations
+        plot(tc_loc, temp_init, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
+        ylim([16,17]);
+        xlabel("Length along rod (m)")
+        ylabel("Temp (°C)")
+        legend('M_{exp}','TC Data')
+        title('Aluminum 25V 240mA')
+        subtitle('Initial State')
+
+        %saving figures
+        fname = sprintf('initial_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
     elseif (b{1} == "Aluminum") && (b{2} == "30V") && (b{3} == "290mA")
-    %temp from thermocouples at t=0
-        temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
-        l_time0 = linspace(0,0.180975,length(temp_time0));
+        %Task 1
+        %NOTE: Polyfit gives 2 arguments: first is slope and second is
+        %intercept
+
+        %defining entire length of rod
+        l_steady = linspace(0,rod_length,100);
+
+        %steady state temp
+        steady_temp = [data(end-2,2:9)];
+
+        %thermocouple locations
+        tc_loc = 0.0762 + (0:7)*delta_x;
+        
+        %fitting
+        [p1,S1] = polyfit(tc_loc,steady_temp,1);
+        y1 = polyval(p1,l_steady);
+
+        %calculating H_exp
+        H_exp(i) = p1(1); %degC/m
+
+        %extract T0 from polyfit (intercept)
+        T0(i) = p1(2); %deg C
+
+        %calculating H_an
+        %H_an = VI/kA
+        H_an(i) = (volts(i) * (amps(i)/1000)) / (k(1) * cross_sec); %degC/m
+
+        %plotting steady state temp starting from x0
+        figure;
+        hold on;
+        grid("on")
+        %plotting with H_exp slope
+        plot(l_steady,y1,LineWidth=2)
+        %plot with H_an slope
+        plot(l_steady,(H_an(i).*l_steady)+T0(i),'k',LineWidth=2)
+        %marking TC locations
+        plot(tc_loc, steady_temp, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
+        xlabel("Length along rod (m)")
+        ylabel("Temp (°C)")
+        legend('H_{exp}','H_{an}','TC Data')
+        title('Aluminum 30V 290mA')
+        subtitle('Steady State')
+
+        %saving figures
+        fname = sprintf('steady_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
+
+        %Task 2
+        %assuming T0 is the first TC temp
+        T0_init = data(1,2);
+
+        %temp from thermocouples at t=0
+        temp_init = [data(1,2:9)];
+
+        %defining entire length of rod
+        l_init = linspace(0,rod_length,100);
 
         %fitting
-        p1 = polyfit(l_time0,temp_time0,1);
-        y1 = polyval(p1,l_time0);
+        [p2,S2] = polyfit(tc_loc,temp_init,1);
+        y2 = polyval(p2,l_init);
+
+        %extracting M_exp
+        M_exp(i) = p2(1);
 
         %plot
         figure;
         grid("on")
         hold on;
-        plot(l_time0,y1,LineWidth=2)
+        %plotting with M_exp slope
+        plot(l_init,y2,LineWidth=2)
+        %marking TC locations
+        plot(tc_loc, temp_init, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
+        ylim([16,17]);
         xlabel("Length along rod (m)")
-        ylabel("Temp (deg C)")
+        ylabel("Temp (°C)")
+        legend('M_{exp}','TC Data')
         title('Aluminum 30V 290mA')
         subtitle('Initial State')
 
-        %extract T0
-        T0(i) = y1(1); %deg C
-
-        %calculating H_an
-        %H_an = VI/kA
-        H_an(i) = (volts(i) * amps(i)) / (k(1) * cross_sec);
-
-        %steady state temp
-        steady_temp = [data(end,2),data(end,2),data(end,3),data(end,4),data(end,5),data(end,6),data(end,7),data(end,8)];
-        l_steady = linspace(0,0.180975,length(steady_temp));
-        p2 = polyfit(l_steady,steady_temp,1);
-        y2 = polyval(p2,l_steady);
-        figure;
-        hold on;
-        grid("on")
-        plot(l_steady,y2,LineWidth=2)
-        xlabel("Length along rod (m)")
-        ylabel("Temp (deg C)")
-        title('Aluminum 30V 290mA')
-        subtitle('Steady State')
+        %saving figures
+        fname = sprintf('initial_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
     elseif (b{1} == "Brass") && (b{2} == "25V") && (b{3} == "237mA")
-    %temp from thermocouples at t=0
-        temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
-        l_time0 = linspace(0,0.180975,length(temp_time0));
+        %Task 1
+        %NOTE: Polyfit gives 2 arguments: first is slope and second is
+        %intercept
+
+        %defining entire length of rod
+        l_steady = linspace(0,rod_length,100);
+
+        %steady state temp
+        steady_temp = [data(end-2,2:9)];
+
+        %thermocouple locations
+        tc_loc = 0.0762 + (0:7)*delta_x;
+        
+        %fitting
+        [p1,S1] = polyfit(tc_loc,steady_temp,1);
+        y1 = polyval(p1,l_steady);
+
+        %calculating H_exp
+        H_exp(i) = p1(1); %degC/m
+
+        %extract T0 from polyfit (intercept)
+        T0(i) = p1(2); %deg C
+
+        %calculating H_an
+        %H_an = VI/kA
+        H_an(i) = (volts(i) * (amps(i)/1000)) / (k(2) * cross_sec); %degC/m
+
+        %plotting steady state temp starting from x0
+        figure;
+        hold on;
+        grid("on")
+        %plotting with H_exp slope
+        plot(l_steady,y1,LineWidth=2)
+        %plot with H_an slope
+        plot(l_steady,(H_an(i).*l_steady)+T0(i),'k',LineWidth=2)
+        %marking TC locations
+        plot(tc_loc, steady_temp, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
+        xlabel("Length along rod (m)")
+        ylabel("Temp (°C)")
+        legend('H_{exp}','H_{an}','TC Data')
+        title('Brass 25V 237mA')
+        subtitle('Steady State')
+
+        %saving figures
+        fname = sprintf('steady_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
+
+        %Task 2
+        %assuming T0 is the first TC temp
+        T0_init = data(1,2);
+
+        %temp from thermocouples at t=0
+        temp_init = [data(1,2:9)];
+
+        %defining entire length of rod
+        l_init = linspace(0,rod_length,100);
 
         %fitting
-        p1 = polyfit(l_time0,temp_time0,1);
-        y1 = polyval(p1,l_time0);
+        [p2,S2] = polyfit(tc_loc,temp_init,1);
+        y2 = polyval(p2,l_init);
+
+        %extracting M_exp
+        M_exp(i) = p2(1);
 
         %plot
         figure;
         grid("on")
         hold on;
-        plot(l_time0,y1,LineWidth=2)
+        %plotting with M_exp slope
+        plot(l_init,y2,LineWidth=2)
+        %marking TC locations
+        plot(tc_loc, temp_init, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
         xlabel("Length along rod (m)")
-        ylabel("Temp (deg C)")
+        ylabel("Temp (°C)")
+        legend('M_{exp}','TC Data')
         title('Brass 25V 237mA')
         subtitle('Initial State')
 
-        %extract T0
-        T0(i) = y1(1); %deg C
-
-        %calculating H_an
-        %H_an = VI/kA
-        H_an(i) = (volts(i) * amps(i)) / (k(2) * cross_sec);
-
-        %steady state temp
-        steady_temp = [data(end,2),data(end,2),data(end,3),data(end,4),data(end,5),data(end,6),data(end,7),data(end,8)];
-        l_steady = linspace(0,0.180975,length(steady_temp));
-        p2 = polyfit(l_steady,steady_temp,1);
-        y2 = polyval(p2,l_steady);
-        figure;
-        hold on;
-        grid("on")
-        plot(l_steady,y2,LineWidth=2)
-        xlabel("Length along rod (m)")
-        ylabel("Temp (deg C)")
-        title('Brass 25V 237mA')
-        subtitle('Steady State')
-
+        %saving figures
+        fname = sprintf('initial_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
+        
     elseif (b{1} == "Brass") && (b{2} == "30V") && (b{3} == "285mA")
-    %temp from thermocouples at t=0
-        temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
-        l_time0 = linspace(0,0.180975,length(temp_time0));
+        %Task 1
+        %NOTE: Polyfit gives 2 arguments: first is slope and second is
+        %intercept
+
+        %defining entire length of rod
+        l_steady = linspace(0,rod_length,100);
+
+        %steady state temp
+        steady_temp = [data(end-2,2:9)];
+
+        %thermocouple locations
+        tc_loc = 0.0762 + (0:7)*delta_x;
+        
+        %fitting
+        [p1,S1] = polyfit(tc_loc,steady_temp,1);
+        y1 = polyval(p1,l_steady);
+
+        %calculating H_exp
+        H_exp(i) = p1(1); %degC/m
+
+        %extract T0 from polyfit (intercept)
+        T0(i) = p1(2); %deg C
+
+        %calculating H_an
+        %H_an = VI/kA
+        H_an(i) = (volts(i) * (amps(i)/1000)) / (k(2) * cross_sec); %degC/m
+
+        %plotting steady state temp starting from x0
+        figure;
+        hold on;
+        grid("on")
+        %plotting with H_exp slope
+        plot(l_steady,y1,LineWidth=2)
+        %plot with H_an slope
+        plot(l_steady,(H_an(i).*l_steady)+T0(i),'k',LineWidth=2)
+        %marking TC locations
+        plot(tc_loc, steady_temp, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
+        xlabel("Length along rod (m)")
+        ylabel("Temp (°C)")
+        legend('H_{exp}','H_{an}','TC Data')
+        title('Brass 30V 285mA')
+        subtitle('Steady State')
+
+        %saving figures
+        fname = sprintf('steady_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
+
+        %Task 2
+        %assuming T0 is the first TC temp
+        T0_init = data(1,2);
+
+        %temp from thermocouples at t=0
+        temp_init = [data(1,2:9)];
+
+        %defining entire length of rod
+        l_init = linspace(0,rod_length,100);
 
         %fitting
-        p1 = polyfit(l_time0,temp_time0,1);
-        y1 = polyval(p1,l_time0);
+        [p2,S2] = polyfit(tc_loc,temp_init,1);
+        y2 = polyval(p2,l_init);
+
+        %extracting M_exp
+        M_exp(i) = p2(1);
 
         %plot
         figure;
         grid("on")
         hold on;
-        plot(l_time0,y1,LineWidth=2)
+        %plotting with M_exp slope
+        plot(l_init,y2,LineWidth=2)
+        %marking TC locations
+        plot(tc_loc, temp_init, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
         xlabel("Length along rod (m)")
-        ylabel("Temp (deg C)")
+        ylabel("Temp (°C)")
+        legend('M_{exp}','TC Data')
         title('Brass 30V 285mA')
         subtitle('Initial State')
 
-        %extract T0
-        T0(i) = y1(1); %deg C
-
-        %calculating H_an
-        %H_an = VI/kA
-        H_an(i) = (volts(i) * amps(i)) / (k(2) * cross_sec);
-
-        %steady state temp
-        steady_temp = [data(end,2),data(end,2),data(end,3),data(end,4),data(end,5),data(end,6),data(end,7),data(end,8)];
-        l_steady = linspace(0,0.180975,length(steady_temp));
-        p2 = polyfit(l_steady,steady_temp,1);
-        y2 = polyval(p2,l_steady);
-        figure;
-        hold on;
-        grid("on")
-        plot(l_steady,y2,LineWidth=2)
-        xlabel("Length along rod (m)")
-        ylabel("Temp (deg C)")
-        title('Brass 30V 285mA')
-        subtitle('Steady State')
+        %saving figures
+        fname = sprintf('initial_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
     elseif (b{1} == "Steel") && (b{2} == "22V") && (b{3} == "203mA")
-    %temp from thermocouples at t=0
-        temp_time0 = [data(1,2),data(1,2),data(1,3),data(1,4),data(1,5),data(1,6),data(1,7),data(1,8),data(1,9)];
-        l_time0 = linspace(0,0.180975,length(temp_time0));
+        %Task 1
+        %NOTE: Polyfit gives 2 arguments: first is slope and second is
+        %intercept
+
+        %defining entire length of rod
+        l_steady = linspace(0,rod_length,100);
+
+        %steady state temp
+        steady_temp = [data(end-2,2:9)];
+
+        %thermocouple locations
+        tc_loc = 0.0762 + (0:7)*delta_x;
+        
+        %fitting
+        [p1,S1] = polyfit(tc_loc,steady_temp,1);
+        y1 = polyval(p1,l_steady);
+
+        %calculating H_exp
+        H_exp(i) = p1(1); %degC/m
+
+        %extract T0 from polyfit (intercept)
+        T0(i) = p1(2); %deg C
+
+        %calculating H_an
+        %H_an = VI/kA
+        H_an(i) = (volts(i) * (amps(i)/1000)) / (k(3) * cross_sec); %degC/m
+
+        %plotting steady state temp starting from x0
+        figure;
+        hold on;
+        grid("on")
+        %plotting with H_exp slope
+        plot(l_steady,y1,LineWidth=2)
+        %plot with H_an slope
+        plot(l_steady,(H_an(i).*l_steady)+T0(i),'k',LineWidth=2)
+        %marking TC locations
+        plot(tc_loc, steady_temp, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
+        xlabel("Length along rod (m)")
+        ylabel("Temp (°C)")
+        legend('H_{exp}','H_{an}','TC Data')
+        title('Steel 22V 203mA')
+        subtitle('Steady State')
+
+        %saving figures
+        fname = sprintf('steady_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
+
+        %Task 2
+        %assuming T0 is the first TC temp
+        T0_init = data(1,2);
+
+        %temp from thermocouples at t=0
+        temp_init = [data(1,2:9)];
+
+        %defining entire length of rod
+        l_init = linspace(0,rod_length,100);
 
         %fitting
-        p1 = polyfit(l_time0,temp_time0,1);
-        y1 = polyval(p1,l_time0);
+        [p2,S2] = polyfit(tc_loc,temp_init,1);
+        y2 = polyval(p2,l_init);
+
+        %extracting M_exp
+        M_exp(i) = p2(1);
 
         %plot
         figure;
         grid("on")
         hold on;
-        plot(l_time0,y1,LineWidth=2)
+        %plotting with M_exp slope
+        plot(l_init,y2,LineWidth=2)
+        %marking TC locations
+        plot(tc_loc, temp_init, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
         xlabel("Length along rod (m)")
-        ylabel("Temp (deg C)")
-        title('Steel 22V 230mA')
+        ylabel("Temp (°C)")
+        legend('M_{exp}','TC Data')
+        title('Steel 22V 203mA')
         subtitle('Initial State')
 
-        %extract T0
-        T0(i) = y1(1); %deg C
-
-        %calculating H_an
-        %H_an = VI/kA
-        H_an(i) = (volts(i) * amps(i)) / (k(3) * cross_sec);
-
-        %steady state temp
-        steady_temp = [data(end,2),data(end,2),data(end,3),data(end,4),data(end,5),data(end,6),data(end,7),data(end,8)];
-        l_steady = linspace(0,0.180975,length(steady_temp));
-        p2 = polyfit(l_steady,steady_temp,1);
-        y2 = polyval(p2,l_steady);
-        figure;
-        hold on;
-        grid("on")
-        plot(l_steady,y2,LineWidth=2)
-        xlabel("Length along rod (m)")
-        ylabel("Temp (deg C)")
-        title('Steel 22V 230mA')
-        subtitle('Steady State')
+        %saving figures
+        fname = sprintf('initial_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
+        
     else
         disp("Error: Incorrect material properties")
-    end
+     end
 
 end
-
-% print('test','-dpng','-r300')
-% saveas(a,'test2',)
