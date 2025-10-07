@@ -89,7 +89,7 @@ for i=1:5
 
         %Task 2
         %assuming T0 is the first TC temp
-        T0_init = data(1,2)+273.15;%K
+        T0_init(i) = data(1,2)+273.15;%K
 
         %temp from thermocouples at t=0
         temp_init = [data(1,2:9)]+273.15;%K
@@ -174,7 +174,7 @@ for i=1:5
 
         %Task 2
         %assuming T0 is the first TC temp
-        T0_init = data(1,2)+273.15;%K
+        T0_init(i) = data(1,2)+273.15;%K
 
         %temp from thermocouples at t=0
         temp_init = [data(1,2:9)]+273.15;%K
@@ -259,7 +259,7 @@ for i=1:5
 
         %Task 2
         %assuming T0 is the first TC temp
-        T0_init = data(1,2)+273.15;%K
+        T0_init(i) = data(1,2)+273.15;%K
 
         %temp from thermocouples at t=0
         temp_init = [data(1,2:9)]+273.15;%K
@@ -343,7 +343,7 @@ for i=1:5
 
         %Task 2
         %assuming T0 is the first TC temp
-        T0_init = data(1,2)+273.15;%K
+        T0_init(i) = data(1,2)+273.15;%K
 
         %temp from thermocouples at t=0
         temp_init = [data(1,2:9)]+273.15;%K
@@ -427,7 +427,7 @@ for i=1:5
 
         %Task 2
         %assuming T0 is the first TC temp
-        T0_init = data(1,2)+273.15;%K
+        T0_init(i) = data(1,2)+273.15;%K
 
         %temp from thermocouples at t=0
         temp_init = [data(1,2:9)]+273.15;%K
