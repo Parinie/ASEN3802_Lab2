@@ -71,8 +71,9 @@ for i=1:5
         grid("on")
         %plotting with H_exp slope
         plot(l_steady,y1,LineWidth=2)
-        plot(l_steady,y1+delta1,'r--',LineWidth=2)
-        plot(l_steady,y1-delta1,'r--',LineWidth=2)
+        plot(l_steady,y1+2,'g--',LineWidth=2)
+        plot(l_steady,y1-2,'g--',LineWidth=2)
+        ylim([250,380])
         %plot with H_an slope
         plot(l_steady,(H_an(i).*l_steady)+T0(i),'k',LineWidth=2)
         %marking TC locations
@@ -110,13 +111,13 @@ for i=1:5
         hold on;
         %plotting with M_exp slope
         plot(l_init,y2,LineWidth=2)
-        plot(l_init,y2+delta2,'r--',LineWidth=2)
-        plot(l_init,y2-delta2,'r--',LineWidth=2)
+        plot(l_init,y2+2,'g--',LineWidth=2)
+        plot(l_init,y2-2,'g--',LineWidth=2)
         %marking TC locations
         plot(tc_loc, temp_init, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
         xlabel("Length along rod (m)")
         ylabel("Temp (K)")
-        ylim([288,292])
+        ylim([285,295])
         legend('M_{exp}','+error','-error','TC Data')
         title('Aluminum 25V 240mA')
         subtitle('Initial State')
@@ -156,8 +157,9 @@ for i=1:5
         grid("on")
         %plotting with H_exp slope
         plot(l_steady,y1,LineWidth=2)
-        plot(l_steady,y1+delta1,'r--',LineWidth=2)
-        plot(l_steady,y1-delta1,'r--',LineWidth=2)
+        plot(l_steady,y1+2,'g--',LineWidth=2)
+        plot(l_steady,y1-2,'g--',LineWidth=2)
+        ylim([250,380])
         %plot with H_an slope
         plot(l_steady,(H_an(i).*l_steady)+T0(i),'k',LineWidth=2)
         %marking TC locations
@@ -195,13 +197,13 @@ for i=1:5
         hold on;
         %plotting with M_exp slope
         plot(l_init,y2,LineWidth=2)
-        plot(l_init,y2+delta2,'r--',LineWidth=2)
-        plot(l_init,y2-delta2,'r--',LineWidth=2)
+        plot(l_init,y2+2,'g--',LineWidth=2)
+        plot(l_init,y2-2,'g--',LineWidth=2)
         %marking TC locations
         plot(tc_loc, temp_init, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
         xlabel("Length along rod (m)")
         ylabel("Temp (K)")
-        ylim([288,292])
+        ylim([285,295])
         legend('M_{exp}','+error','-error','TC Data')
         title('Aluminum 30V 290mA')
         subtitle('Initial State')
@@ -241,8 +243,9 @@ for i=1:5
         grid("on")
         %plotting with H_exp slope
         plot(l_steady,y1,LineWidth=2)
-        plot(l_steady,y1+delta1,'r--',LineWidth=2)
-        plot(l_steady,y1-delta1,'r--',LineWidth=2)
+        plot(l_steady,y1+2,'g--',LineWidth=2)
+        plot(l_steady,y1-2,'g--',LineWidth=2)
+        ylim([250,380])
         %plot with H_an slope
         plot(l_steady,(H_an(i).*l_steady)+T0(i),'k',LineWidth=2)
         %marking TC locations
@@ -280,8 +283,9 @@ for i=1:5
         hold on;
         %plotting with M_exp slope
         plot(l_init,y2,LineWidth=2)
-        plot(l_init,y2+delta2,'r--',LineWidth=2)
-        plot(l_init,y2-delta2,'r--',LineWidth=2)
+        plot(l_init,y2+2,'g--',LineWidth=2)
+        plot(l_init,y2-2,'g--',LineWidth=2)
+        ylim([285,295])
         %marking TC locations
         plot(tc_loc, temp_init, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
         xlabel("Length along rod (m)")
@@ -325,8 +329,9 @@ for i=1:5
         grid("on")
         %plotting with H_exp slope
         plot(l_steady,y1,LineWidth=2)
-        plot(l_steady,y1+delta1,'r--',LineWidth=2)
-        plot(l_steady,y1-delta1,'r--',LineWidth=2)
+        plot(l_steady,y1+2,'g--',LineWidth=2)
+        plot(l_steady,y1-2,'g--',LineWidth=2)
+        ylim([250,380])
         %plot with H_an slope
         plot(l_steady,(H_an(i).*l_steady)+T0(i),'k',LineWidth=2)
         %marking TC locations
@@ -364,8 +369,9 @@ for i=1:5
         hold on;
         %plotting with M_exp slope
         plot(l_init,y2,LineWidth=2)
-        plot(l_init,y2+delta2,'r--',LineWidth=2)
-        plot(l_init,y2-delta2,'r--',LineWidth=2)
+        plot(l_init,y2+2,'g--',LineWidth=2)
+        plot(l_init,y2-2,'g--',LineWidth=2)
+        ylim([285,295])
         %marking TC locations
         plot(tc_loc, temp_init, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
         xlabel("Length along rod (m)")
@@ -409,8 +415,9 @@ for i=1:5
         grid("on")
         %plotting with H_exp slope
         plot(l_steady,y1,LineWidth=2)
-        plot(l_steady,y1+delta1,'r--',LineWidth=2)
-        plot(l_steady,y1-delta1,'r--',LineWidth=2)
+        plot(l_steady,y1+2,'g--',LineWidth=2)
+        plot(l_steady,y1-2,'g--',LineWidth=2)
+        ylim([250,380])
         %plot with H_an slope
         plot(l_steady,(H_an(i).*l_steady)+T0(i),'k',LineWidth=2)
         %marking TC locations
@@ -448,8 +455,9 @@ for i=1:5
         hold on;
         %plotting with M_exp slope
         plot(l_init,y2,LineWidth=2)
-        plot(l_init,y2+delta2,'r--',LineWidth=2)
-        plot(l_init,y2-delta2,'r--',LineWidth=2)
+        plot(l_init,y2+2,'g--',LineWidth=2)
+        plot(l_init,y2-2,'g--',LineWidth=2)
+        ylim([285,295])
         %marking TC locations
         plot(tc_loc, temp_init, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
         xlabel("Length along rod (m)")
