@@ -148,9 +148,9 @@ for i=1:5
 
         %transient solution 
         %time = 0s
-        u1 = T0(i) + (H_an(i).*tc_loc(end)) + series1;
+        u1 = (T0(i) + (H_an(i).*tc_loc(end)) + series1) - 273.15; %converted to degC
         %time = 1000s
-        u2 = T0(i) + (H_an(i).*tc_loc(end)) + series2;
+        u2 = (T0(i) + (H_an(i).*tc_loc(end)) + series2) - 273.15; %converted to degC
 
         %plotting u(x,t) vs n
         figure;
@@ -159,7 +159,7 @@ for i=1:5
         grid on;
         plot((0:10),u2,LineWidth=2)
         xlabel('n')
-        ylabel('u(x,t) [K]')
+        ylabel('u(x,t) [deg C]')
         title('Transient Solution at Th8')
         legend('t=1','t=1000')
 
@@ -168,13 +168,28 @@ for i=1:5
         saveas(gcf,fname,'png')
 
         %% Part 2 Task 2
+        %chosen n value: n=6
+
+        time = data(:,1);
+        series = zeros(length(time),7);
+
+        for t=1:length(time) % over time 
+            for tc=1:length(tc_loc)% each x of thermocouple
+                for n=1:6
+                    %calculate b_n
+                    b_n(n) = ((-1.^n).*(-8).*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
+                    %calculate lambda_n
+                    lambda_n(n) = (((2*n)-1)*pi)/(2*rod_length);
+                    %calculate series
+                    series(t,n+1) = series(n) + b_n(n).*sin(lambda_n(n).*tc_loc(tc)).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time(t));
+                end
+                u_Al_25(t,tc) = T0_init(i) + (H_an(i).*tc_loc(tc)) + series1(t);
+            end
+       
+        end
+
         
-        % for n=1:length(l_steady)
-        %     series1(n+1) = series1(n) + b_n(n).*sin(lambda_n(n).*l_steady(n)).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time1);
-        % end
-        % 
-        % new_u = T0_init(i) + (H_an(i).*tc_loc) + series1;
-        % 
+
         % %plotting u(x,t) against all tc loc
         % figure;
         % plot(tc_loc,new_u,LineWidth=2)
