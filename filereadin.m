@@ -126,6 +126,47 @@ for i=1:5
         fname = sprintf('initial_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
+        %% Part 2 Task 1
+        %constants needed
+        
+        x8 = rod_length - 0.0254; %position at Th8 (m)
+
+        %general soln u(t)
+        time1 = 0; %s
+        time2 = 1000; %s
+
+        %series
+        series1 = zeros(1,11);
+        series2 = zeros(1,11);
+
+        for n=1:10
+            %calculate b_n
+            b_n(n) = ((-1.^n).*(-8).*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
+            %calculate lambda_n
+            lambda_n(n) = (((2.*(n))-1).*pi)/(2.*rod_length);
+            %series for time = 0s
+            series1(n+1) = series1(n) + b_n(n).*sin(lambda_n(n).*x8).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time1);
+            %series for time = 1000s
+            series2(n+1) = series2(n) + b_n(n).*sin(lambda_n(n).*x8).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time2);
+        end
+
+        %transient solution 
+        %time = 0s
+        u1 = T0_init(i) + (H_an(i).*x8) + series1;
+        %time = 1000s
+        u2 = T0_init(i) + (H_an(i).*x8) + series2;
+
+        figure;
+        plot((0:10),u1,LineWidth=2)
+        hold on;
+        grid on;
+        plot((0:10),u2,LineWidth=2)
+        xlabel('n')
+        ylabel('u(x,t)')
+        title('Transient Solution for x=0.1556m')
+        legend('t=0','t=1000')
+
+
     elseif (b{1} == "Aluminum") && (b{2} == "30V") && (b{3} == "290mA")
         %Task 1
         %NOTE: Polyfit gives 2 arguments: first is slope and second is
