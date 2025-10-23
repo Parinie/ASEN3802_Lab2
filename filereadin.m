@@ -169,17 +169,17 @@ for i=1:5
 
         %% Part 2 Task 2
         
-        for n=1:length(l_steady)
-            series1(n+1) = series1(n) + b_n(n).*sin(lambda_n(n).*l_steady(n)).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time1);
-        end
-
-        new_u = T0_init(i) + (H_an(i).*tc_loc) + series1;
-
-        %plotting u(x,t) against all tc loc
-        figure;
-        plot(tc_loc,new_u,LineWidth=2)
-        xlabel("TC Locations (m)")
-        ylabel("u(x,t)")
+        % for n=1:length(l_steady)
+        %     series1(n+1) = series1(n) + b_n(n).*sin(lambda_n(n).*l_steady(n)).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time1);
+        % end
+        % 
+        % new_u = T0_init(i) + (H_an(i).*tc_loc) + series1;
+        % 
+        % %plotting u(x,t) against all tc loc
+        % figure;
+        % plot(tc_loc,new_u,LineWidth=2)
+        % xlabel("TC Locations (m)")
+        % ylabel("u(x,t)")
 
 
 
