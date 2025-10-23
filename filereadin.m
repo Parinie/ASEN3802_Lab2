@@ -127,12 +127,8 @@ for i=1:5
         saveas(gcf,fname,'png')
 
         %% Part 2 Task 1
-        %constants needed
-        
-        x8 = rod_length - 0.0254; %position at Th8 (m)
-
         %general soln u(t)
-        time1 = 0; %s
+        time1 = 1; %s
         time2 = 1000; %s
 
         %series
@@ -143,28 +139,49 @@ for i=1:5
             %calculate b_n
             b_n(n) = ((-1.^n).*(-8).*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
             %calculate lambda_n
-            lambda_n(n) = (((2.*(n))-1).*pi)/(2.*rod_length);
+            lambda_n(n) = (((2*n)-1)*pi)/(2*rod_length);
             %series for time = 0s
-            series1(n+1) = series1(n) + b_n(n).*sin(lambda_n(n).*x8).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time1);
+            series1(n+1) = series1(n) + b_n(n).*sin(lambda_n(n).*tc_loc(end)).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time1);
             %series for time = 1000s
-            series2(n+1) = series2(n) + b_n(n).*sin(lambda_n(n).*x8).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time2);
+            series2(n+1) = series2(n) + b_n(n).*sin(lambda_n(n).*tc_loc(end)).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time2);
         end
 
         %transient solution 
         %time = 0s
-        u1 = T0_init(i) + (H_an(i).*x8) + series1;
+        u1 = T0(i) + (H_an(i).*tc_loc(end)) + series1;
         %time = 1000s
-        u2 = T0_init(i) + (H_an(i).*x8) + series2;
+        u2 = T0(i) + (H_an(i).*tc_loc(end)) + series2;
 
+        %plotting u(x,t) vs n
         figure;
         plot((0:10),u1,LineWidth=2)
         hold on;
         grid on;
         plot((0:10),u2,LineWidth=2)
         xlabel('n')
-        ylabel('u(x,t)')
-        title('Transient Solution for x=0.1556m')
-        legend('t=0','t=1000')
+        ylabel('u(x,t) [K]')
+        title('Transient Solution at Th8')
+        legend('t=1','t=1000')
+
+        %saving figures
+        fname = sprintf('analytical_transient.png');
+        saveas(gcf,fname,'png')
+
+        %% Part 2 Task 2
+        
+        for n=1:length(l_steady)
+            series1(n+1) = series1(n) + b_n(n).*sin(lambda_n(n).*l_steady(n)).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time1);
+        end
+
+        new_u = T0_init(i) + (H_an(i).*tc_loc) + series1;
+
+        %plotting u(x,t) against all tc loc
+        figure;
+        plot(tc_loc,new_u,LineWidth=2)
+        xlabel("TC Locations (m)")
+        ylabel("u(x,t)")
+
+
 
 
     elseif (b{1} == "Aluminum") && (b{2} == "30V") && (b{3} == "290mA")

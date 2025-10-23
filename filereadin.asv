@@ -141,7 +141,7 @@ for i=1:5
 
         for n=1:10
             %calculate b_n
-            b_n(n) = ((-1.^(n)).*(-8).*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2)) .* (((-2).*H_an(i)./rod_length));
+            b_n(n) = ((-1.^n).*(-8).*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
             %calculate lambda_n
             lambda_n(n) = (((2.*(n))-1).*pi)/(2.*rod_length);
             %series for time = 0s
@@ -150,16 +150,13 @@ for i=1:5
             series2(n+1) = series2(n) + b_n(n).*sin(lambda_n(n).*x8).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time2);
         end
 
-        %removing the first element from the series (redundant)
-        series1 = series1(2:end);
-        series2 = series2(2:end);
-
         %transient solution 
         %time = 0s
-        u1 = [0,T0(i) + (H_an(i).*x8) + series1];
+        u1 = T0_init(i) + (H_an(i).*x8) + series1;
         %time = 1000s
-        u2 = [0,T0(i) + (H_an(i).*x8) + series2];
+        u2 = T0_init(i) + (H_an(i).*x8) + series2;
 
+        %plotting u(x,t) vs n
         figure;
         plot((0:10),u1,LineWidth=2)
         hold on;
@@ -167,6 +164,27 @@ for i=1:5
         plot((0:10),u2,LineWidth=2)
         xlabel('n')
         ylabel('u(x,t)')
+        title('Transient Solution for x=0.1556m')
+        legend('t=0','t=1000')
+
+        %saving figures
+        fname = sprintf('analytical_transient.png');
+        saveas(gcf,fname,'png')
+
+        %% Part 2 Task 2
+       
+        new_series = series1(n) + b_n(n).*sin(lambda_n(n).*x8).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time1);
+
+        new_u = T0_init(i) + (H_an(i).*tc_loc) + series1;
+
+        %plotting u(x,t) against all tc loc
+        figure;
+        plot(tc_loc,new_u,LineWidth=2)
+        xlabel("TC Locations (m)")
+        ylabel("u(x,t)")
+
+
+
 
     elseif (b{1} == "Aluminum") && (b{2} == "30V") && (b{3} == "290mA")
         %Task 1
