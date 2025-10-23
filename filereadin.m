@@ -137,13 +137,13 @@ for i=1:5
 
         for n=1:10
             %calculate b_n
-            b_n(n) = ((-1.^n).*(-8).*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
+            b_n(n) = (((-1).^n).*(-8).*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
             %calculate lambda_n
             lambda_n(n) = (((2*n)-1)*pi)/(2*rod_length);
             %series for time = 0s
-            series1(n+1) = series1(n) + b_n(n).*sin(lambda_n(n).*tc_loc(end)).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time1);
+            series1(n+1) = series1(n) + (b_n(n).*sin(lambda_n(n).*tc_loc(end)).*exp((-1).*(lambda_n(n).^2).*alpha(1).*time1));
             %series for time = 1000s
-            series2(n+1) = series2(n) + b_n(n).*sin(lambda_n(n).*tc_loc(end)).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time2);
+            series2(n+1) = series2(n) + (b_n(n).*sin(lambda_n(n).*tc_loc(end)).*exp((-1).*(lambda_n(n).^2).*alpha(1).*time2));
         end
 
         %transient solution 
@@ -176,16 +176,16 @@ for i=1:5
 
         for t=1:length(time) % over time 
             for tc=1:length(tc_loc)% each x of thermocouple
-                for n=1:6
+                for n=1:6 %for n
                     %calculate b_n
-                    b_n(n) = ((-1.^n).*(-8).*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
+                    b_n(n) = (((-1).^n).*(-8).*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
                     %calculate lambda_n
                     lambda_n(n) = (((2*n)-1)*pi)/(2*rod_length);
                     %calculate series
                     series(t,tc,n+1) = series(n) + b_n(n).*sin(lambda_n(n).*tc_loc(tc)).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time(t));
                 end
                 series = series(:,:,end);
-                u_Al_25(t,tc) = T0_init(i) + (H_an(i).*tc_loc(tc)) + series(t,tc);
+                u_Al_25(t,tc) = (T0_init(i) + (H_an(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
                 
             end
        
@@ -193,9 +193,14 @@ for i=1:5
 
         %plotting u(x,t) against all tc loc
         figure;
-        plot(time,u_Al_25,LineWidth=2)
-        xlabel("TC Locations (m)")
-        ylabel("u(x,t)")
+        hold on;
+        grid on;
+        for tc=1:length(tc_loc)
+            plot(time,u_Al_25(:,tc),'k',LineWidth=2)
+            %plot(time,data(:,(tc+1)),'r',LineWidth=2)
+        end
+        xlabel("time (s)")
+        ylabel("u(x,t) [degC]")
 
 
 

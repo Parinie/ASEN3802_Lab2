@@ -171,11 +171,12 @@ for i=1:5
         %chosen n value: n=6
 
         time = data(:,1);
+        time = time(1:end-2);
         series = zeros(length(time),length(tc_loc),7);
 
         for t=1:length(time) % over time 
             for tc=1:length(tc_loc)% each x of thermocouple
-                for n=1:6
+                for n=1:6 %for n
                     %calculate b_n
                     b_n(n) = ((-1.^n).*(-8).*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
                     %calculate lambda_n
@@ -184,18 +185,22 @@ for i=1:5
                     series(t,tc,n+1) = series(n) + b_n(n).*sin(lambda_n(n).*tc_loc(tc)).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time(t));
                 end
                 series = series(:,:,end);
-                u_Al_25(t,tc) = T0_init(i) + (H_an(i).*tc_loc(tc)) + series(t,tc);
+                u_Al_25(t,tc) = (T0_init(i) + (H_an(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
+                
             end
        
         end
 
-        
-
-        % %plotting u(x,t) against all tc loc
-        % figure;
-        % plot(tc_loc,new_u,LineWidth=2)
-        % xlabel("TC Locations (m)")
-        % ylabel("u(x,t)")
+        %plotting u(x,t) against all tc loc
+        figure;
+        hold on;
+        grid on;
+        for tc=1:length(tc_loc)
+            plot(time,u_Al_25(:,tc),'k',LineWidth=2)
+        end
+        for
+        xlabel("time (s)")
+        ylabel("u(x,t) [degC]")
 
 
 
