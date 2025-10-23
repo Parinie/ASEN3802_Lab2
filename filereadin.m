@@ -21,7 +21,7 @@ delta_x = 0.0127; %m
 cross_sec = pi * ((diameter/2)^2);
 rod_length = 0.180975; % m
 %thermocouple locations
-tc_loc = 0.0762 + (0:7)*delta_x;
+tc_loc = 0.0349 + (0:7)*delta_x;
 
 %%
 folder = '3802Lab2_data';
@@ -168,24 +168,24 @@ for i=1:5
         saveas(gcf,fname,'png')
 
         %% Part 2 Task 2
-        %chosen n value: n=6
+        %chosen n value: n=4
 
         time = data(:,1);
         time = time(1:end-2);
-        series = zeros(length(time),length(tc_loc),7);
+        series = zeros(length(time),length(tc_loc),5);
 
         for t=1:length(time) % over time 
             for tc=1:length(tc_loc)% each x of thermocouple
-                for n=1:6 %for n
+                for n=1:4 %for n
                     %calculate b_n
-                    b_n(n) = (((-1).^n).*8.*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
+                    new_b_n(n) = (((-1).^n).*8.*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
                     %calculate lambda_n
-                    lambda_n(n) = (((2*n)-1)*pi)/(2*rod_length);
+                    new_lambda_n(n) = (((2*n)-1)*pi)/(2*rod_length);
                     %calculate series
-                    series(t,tc,n+1) = series(n) + b_n(n).*sin(lambda_n(n).*tc_loc(tc)).*exp(-1.*(lambda_n(n).^2).*alpha(1).*time(t));
+                    series(t,tc,n+1) = series(t,tc,n) + (new_b_n(n).*sin(new_lambda_n(n).*tc_loc(tc)).*exp(-1.*(new_lambda_n(n).^2).*alpha(1).*(time(t))));
                 end
                 series = series(:,:,end);
-                u_Al_25(t,tc) = (T0_init(i) + (H_an(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
+                u_Al_25(t,tc) = (T0(i) + (H_an(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
                 
             end
        
@@ -197,13 +197,15 @@ for i=1:5
         grid on;
         for tc=1:length(tc_loc)
             plot(time,u_Al_25(:,tc),'k',LineWidth=2)
-            %plot(time,data(:,(tc+1)),'r',LineWidth=2)
+            plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
         end
         xlabel("time (s)")
-        ylabel("u(x,t) [degC]")
+        ylabel("u [°C]")
+        title("Aluminium 25V")
 
-
-
+        %saving figures
+        fname = sprintf('Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
     elseif (b{1} == "Aluminum") && (b{2} == "30V") && (b{3} == "290mA")
         %Task 1
@@ -291,6 +293,46 @@ for i=1:5
         fname = sprintf('initial_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
+        %% Part 2 Task 2
+        %chosen n value: n=4
+
+        time = data(:,1);
+        time = time(1:end-2);
+        series = zeros(length(time),length(tc_loc),5);
+
+        for t=1:length(time) % over time 
+            for tc=1:length(tc_loc)% each x of thermocouple
+                for n=1:4 %for n
+                    %calculate b_n
+                    new_b_n(n) = (((-1).^n).*8.*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
+                    %calculate lambda_n
+                    new_lambda_n(n) = (((2*n)-1)*pi)/(2*rod_length);
+                    %calculate series
+                    series(t,tc,n+1) = series(t,tc,n) + (new_b_n(n).*sin(new_lambda_n(n).*tc_loc(tc)).*exp(-1.*(new_lambda_n(n).^2).*alpha(1).*(time(t))));
+                end
+                series = series(:,:,end);
+                u_Al_30(t,tc) = (T0(i) + (H_an(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
+                
+            end
+       
+        end
+
+        %plotting u(x,t) against all tc loc
+        figure;
+        hold on;
+        grid on;
+        for tc=1:length(tc_loc)
+            plot(time,u_Al_30(:,tc),'k',LineWidth=2)
+            plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
+        end
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title("Aluminium 30V")
+
+        %saving figures
+        fname = sprintf('Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
+
     elseif (b{1} == "Brass") && (b{2} == "25V") && (b{3} == "237mA")
         %Task 1
         %NOTE: Polyfit gives 2 arguments: first is slope and second is
@@ -375,6 +417,46 @@ for i=1:5
 
         %saving figures
         fname = sprintf('initial_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
+
+        %% Part 2 Task 2
+        %chosen n value: n=4
+
+        time = data(:,1);
+        time = time(1:end-2);
+        series = zeros(length(time),length(tc_loc),5);
+
+        for t=1:length(time) % over time 
+            for tc=1:length(tc_loc)% each x of thermocouple
+                for n=1:4 %for n
+                    %calculate b_n
+                    new_b_n(n) = (((-1).^n).*8.*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
+                    %calculate lambda_n
+                    new_lambda_n(n) = (((2*n)-1)*pi)/(2*rod_length);
+                    %calculate series
+                    series(t,tc,n+1) = series(t,tc,n) + (new_b_n(n).*sin(new_lambda_n(n).*tc_loc(tc)).*exp(-1.*(new_lambda_n(n).^2).*alpha(1).*(time(t))));
+                end
+                series = series(:,:,end);
+                u_Br_25(t,tc) = (T0(i) + (H_an(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
+                
+            end
+       
+        end
+
+        %plotting u(x,t) against all tc loc
+        figure;
+        hold on;
+        grid on;
+        for tc=1:length(tc_loc)
+            plot(time,u_Br_25(:,tc),'k',LineWidth=2)
+            plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
+        end
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title("Brass 25V")
+
+        %saving figures
+        fname = sprintf('Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
         
     elseif (b{1} == "Brass") && (b{2} == "30V") && (b{3} == "285mA")
@@ -463,6 +545,46 @@ for i=1:5
         fname = sprintf('initial_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
+        %% Part 2 Task 2
+        %chosen n value: n=4
+
+        time = data(:,1);
+        time = time(1:end-2);
+        series = zeros(length(time),length(tc_loc),5);
+
+        for t=1:length(time) % over time 
+            for tc=1:length(tc_loc)% each x of thermocouple
+                for n=1:4 %for n
+                    %calculate b_n
+                    new_b_n(n) = (((-1).^n).*8.*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
+                    %calculate lambda_n
+                    new_lambda_n(n) = (((2*n)-1)*pi)/(2*rod_length);
+                    %calculate series
+                    series(t,tc,n+1) = series(t,tc,n) + (new_b_n(n).*sin(new_lambda_n(n).*tc_loc(tc)).*exp(-1.*(new_lambda_n(n).^2).*alpha(1).*(time(t))));
+                end
+                series = series(:,:,end);
+                u_Br_30(t,tc) = (T0(i) + (H_an(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
+                
+            end
+       
+        end
+
+        %plotting u(x,t) against all tc loc
+        figure;
+        hold on;
+        grid on;
+        for tc=1:length(tc_loc)
+            plot(time,u_Br_30(:,tc),'k',LineWidth=2)
+            plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
+        end
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title("Brass 30V")
+
+        %saving figures
+        fname = sprintf('Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
+
     elseif (b{1} == "Steel") && (b{2} == "22V") && (b{3} == "203mA")
         %Task 1
         %NOTE: Polyfit gives 2 arguments: first is slope and second is
@@ -547,6 +669,47 @@ for i=1:5
 
         %saving figures
         fname = sprintf('initial_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
+
+        %% Part 2 Task 2
+        %chosen n value: n=4
+
+        time = data(:,1);
+        time = time(1:end-2);
+        series = zeros(length(time),length(tc_loc),5);
+
+        for t=1:length(time) % over time 
+            for tc=1:length(tc_loc)% each x of thermocouple
+                for n=1:4 %for n
+                    %calculate b_n
+                    new_b_n(n) = (((-1).^n).*8.*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
+                    %calculate lambda_n
+                    new_lambda_n(n) = (((2*n)-1)*pi)/(2*rod_length);
+                    %calculate series
+                    series(t,tc,n+1) = series(t,tc,n) + (new_b_n(n).*sin(new_lambda_n(n).*tc_loc(tc)).*exp(-1.*(new_lambda_n(n).^2).*alpha(1).*(time(t))));
+                end
+                series = series(:,:,end);
+                u_St_22(t,tc) = (T0(i) + (H_an(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
+                
+            end
+       
+        end
+
+        %plotting u(x,t) against all tc loc
+        figure;
+        hold on;
+        grid on;
+        for tc=1:length(tc_loc)
+            plot(time,u_St_22(:,tc),'k',LineWidth=2)
+            plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
+        end
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title("Steel 22V")
+        legend("Model","Exp",Location='best')
+
+        %saving figures
+        fname = sprintf('Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
         
     else
