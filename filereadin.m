@@ -137,7 +137,7 @@ for i=1:5
 
         for n=1:10
             %calculate b_n
-            b_n(n) = (((-1).^n).*(-8).*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
+            b_n(n) = (((-1).^n).*8.*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
             %calculate lambda_n
             lambda_n(n) = (((2*n)-1)*pi)/(2*rod_length);
             %series for time = 0s
@@ -178,7 +178,7 @@ for i=1:5
             for tc=1:length(tc_loc)% each x of thermocouple
                 for n=1:6 %for n
                     %calculate b_n
-                    b_n(n) = (((-1).^n).*(-8).*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
+                    b_n(n) = (((-1).^n).*8.*rod_length.*H_an(i))./((pi.^2).*(((2.*(n))-1).^2));
                     %calculate lambda_n
                     lambda_n(n) = (((2*n)-1)*pi)/(2*rod_length);
                     %calculate series
