@@ -202,9 +202,10 @@ for i=1:5
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Aluminium 25V")
+        legend("Model","Exp",Location='best')
 
         %saving figures
-        fname = sprintf('Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part2_Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
         %% Part 2 Task 3
@@ -242,9 +243,10 @@ for i=1:5
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Aluminium 25V")
+        legend("Model","Exp",Location='best')
 
         %saving figures
-        fname = sprintf('Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part2_Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
     elseif (b{1} == "Aluminum") && (b{2} == "30V") && (b{3} == "290mA")
@@ -368,9 +370,10 @@ for i=1:5
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Aluminium 30V")
+        legend("Model","Exp",Location='best')
 
         %saving figures
-        fname = sprintf('Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part2_Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
         %% Part 2 Task 3
@@ -408,9 +411,10 @@ for i=1:5
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Aluminium 30V")
+        legend("Model","Exp",Location='best')
 
         %saving figures
-        fname = sprintf('Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part2_Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
     elseif (b{1} == "Brass") && (b{2} == "25V") && (b{3} == "237mA")
@@ -494,6 +498,7 @@ for i=1:5
         legend('M_{exp}','+error','-error','TC Data')
         title('Brass 25V 237mA')
         subtitle('Initial State')
+        legend("Model","Exp",Location='best')
 
         %saving figures
         fname = sprintf('initial_%s_%s_%s.png', b{1}, b{2}, b{3});
@@ -534,9 +539,10 @@ for i=1:5
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Brass 25V")
+        legend("Model","Exp",Location='best')
 
         %saving figures
-        fname = sprintf('Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part2_Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
         %% Part 2 Task 3
@@ -574,9 +580,10 @@ for i=1:5
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Brass 25V")
+        legend("Model","Exp",Location='best')
 
         %saving figures
-        fname = sprintf('Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part2_Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
         
     elseif (b{1} == "Brass") && (b{2} == "30V") && (b{3} == "285mA")
@@ -702,7 +709,7 @@ for i=1:5
         title("Brass 30V")
 
         %saving figures
-        fname = sprintf('Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part2_Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
         %% Part 2 Task 3
@@ -740,9 +747,10 @@ for i=1:5
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Brass 30V")
+        legend("Model","Exp",Location='best')
 
         %saving figures
-        fname = sprintf('Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part2_Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
     elseif (b{1} == "Steel") && (b{2} == "22V") && (b{3} == "203mA")
@@ -869,7 +877,7 @@ for i=1:5
         legend("Model","Exp",Location='best')
 
         %saving figures
-        fname = sprintf('Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part2_Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
         %% Part 2 Task 3
@@ -910,7 +918,7 @@ for i=1:5
         legend("Model","Exp",Location='best')
 
         %saving figures
-        fname = sprintf('Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part2_Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
         
     else
