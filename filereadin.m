@@ -161,7 +161,7 @@ for i=1:5
         xlabel('n')
         ylabel('u(x,t) [deg C]')
         title('Transient Solution at Th8')
-        legend('t=1','t=1000')
+        legend('t=1','t=1000',Location="best")
 
         %saving figures
         fname = sprintf('analytical_transient.png');
@@ -192,7 +192,7 @@ for i=1:5
         end
 
         %plotting u(x,t) against all tc loc
-        figure;
+        figure();
         hold on;
         grid on;
         for tc=1:length(tc_loc)
@@ -401,7 +401,7 @@ for i=1:5
         end
 
         %plotting u(x,t) against all tc loc
-        figure;
+        figure();
         hold on;
         grid on;
         for tc=1:length(tc_loc)
@@ -410,7 +410,7 @@ for i=1:5
         end
         xlabel("time (s)")
         ylabel("u [°C]")
-        title("Aluminium 30V")
+        sgtitle("Aluminium 30V")
         legend("Model","Exp",Location='best')
 
         %saving figures
@@ -611,7 +611,7 @@ for i=1:5
         end
 
         %plotting u(x,t) against all tc loc
-        figure;
+        figure();
         hold on;
         grid on;
         for tc=1:length(tc_loc)
@@ -820,7 +820,7 @@ for i=1:5
         end
 
         %plotting u(x,t) against all tc loc
-        figure;
+        figure();
         hold on;
         grid on;
         for tc=1:length(tc_loc)
@@ -829,7 +829,7 @@ for i=1:5
         end
         xlabel("time (s)")
         ylabel("u [°C]")
-        title("Brass 30V")
+        sgtitle("Brass 30V")
         legend("Model","Exp",Location='best')
 
         %saving figures
@@ -1029,7 +1029,7 @@ for i=1:5
         end
 
         %plotting u(x,t) against all tc loc
-        figure;
+        figure();
         hold on;
         grid on;
         for tc=1:length(tc_loc)
@@ -1038,7 +1038,7 @@ for i=1:5
         end
         xlabel("time (s)")
         ylabel("u [°C]")
-        title("Steel 22V")
+        sgtitle("Steel 22V")
         legend("Model","Exp",Location='best')
 
         %saving figures
