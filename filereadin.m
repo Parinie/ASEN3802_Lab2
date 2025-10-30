@@ -65,28 +65,28 @@ for i=1:5
         %H_an = VI/kA
         H_an(i) = ((volts(i) * (amps(i)/1000)) / (k(1) * cross_sec)); %K/m
 
-        %plotting steady state temp starting from x0
-        figure;
-        hold on;
-        grid("on")
-        %plotting with H_exp slope
-        plot(l_steady,y1,LineWidth=2)
-        plot(l_steady,y1+2,'g--',LineWidth=2)
-        plot(l_steady,y1-2,'g--',LineWidth=2)
-        ylim([250,380])
-        %plot with H_an slope
-        plot(l_steady,(H_an(i).*l_steady)+T0(i),'k',LineWidth=2)
-        %marking TC locations
-        plot(tc_loc, steady_temp, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
-        xlabel("Length along rod (m)")
-        ylabel("Temp (K)")
-        legend('H_{exp}','+error','-error','H_{an}','TC Data')
-        title('Aluminum 25V 240mA')
-        subtitle('Steady State')
-
-        %saving figures
-        fname = sprintf('steady_%s_%s_%s.png', b{1}, b{2}, b{3});
-        saveas(gcf,fname,'png')
+        % %plotting steady state temp starting from x0
+        % figure;
+        % hold on;
+        % grid("on")
+        % %plotting with H_exp slope
+        % plot(l_steady,y1,LineWidth=2)
+        % plot(l_steady,y1+2,'g--',LineWidth=2)
+        % plot(l_steady,y1-2,'g--',LineWidth=2)
+        % ylim([250,380])
+        % %plot with H_an slope
+        % plot(l_steady,(H_an(i).*l_steady)+T0(i),'k',LineWidth=2)
+        % %marking TC locations
+        % plot(tc_loc, steady_temp, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
+        % xlabel("Length along rod (m)")
+        % ylabel("Temp (K)")
+        % legend('H_{exp}','+error','-error','H_{an}','TC Data')
+        % title('Aluminum 25V 240mA')
+        % subtitle('Steady State')
+        % 
+        % %saving figures
+        % fname = sprintf('steady_%s_%s_%s.png', b{1}, b{2}, b{3});
+        % saveas(gcf,fname,'png')
 
         %Task 2
         %assuming T0 is the first TC temp
@@ -105,26 +105,26 @@ for i=1:5
         %extracting M_exp
         M_exp(i) = p2(1);%K/m
 
-        %plot
-        figure;
-        grid("on")
-        hold on;
-        %plotting with M_exp slope
-        plot(l_init,y2,LineWidth=2)
-        plot(l_init,y2+2,'g--',LineWidth=2)
-        plot(l_init,y2-2,'g--',LineWidth=2)
-        %marking TC locations
-        plot(tc_loc, temp_init, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
-        xlabel("Length along rod (m)")
-        ylabel("Temp (K)")
-        ylim([285,295])
-        legend('M_{exp}','+error','-error','TC Data')
-        title('Aluminum 25V 240mA')
-        subtitle('Initial State')
-
-        %saving figures
-        fname = sprintf('initial_%s_%s_%s.png', b{1}, b{2}, b{3});
-        saveas(gcf,fname,'png')
+        % %plot
+        % figure;
+        % grid("on")
+        % hold on;
+        % %plotting with M_exp slope
+        % plot(l_init,y2,LineWidth=2)
+        % plot(l_init,y2+2,'g--',LineWidth=2)
+        % plot(l_init,y2-2,'g--',LineWidth=2)
+        % %marking TC locations
+        % plot(tc_loc, temp_init, 'o', 'MarkerSize', 8, 'MarkerFaceColor', 'r', 'MarkerEdgeColor', 'r'); 
+        % xlabel("Length along rod (m)")
+        % ylabel("Temp (K)")
+        % ylim([285,295])
+        % legend('M_{exp}','+error','-error','TC Data')
+        % title('Aluminum 25V 240mA')
+        % subtitle('Initial State')
+        % 
+        % %saving figures
+        % fname = sprintf('initial_%s_%s_%s.png', b{1}, b{2}, b{3});
+        % saveas(gcf,fname,'png')
 
         %% Part 2 Task 1
         %general soln u(t)
@@ -152,20 +152,20 @@ for i=1:5
         %time = 1000s
         u2 = (T0(i) + (H_an(i).*tc_loc(end)) + series2) - 273.15; %converted to degC
 
-        %plotting u(x,t) vs n
-        figure;
-        plot((0:10),u1,LineWidth=2)
-        hold on;
-        grid on;
-        plot((0:10),u2,LineWidth=2)
-        xlabel('n')
-        ylabel('u(x,t) [deg C]')
-        title('Transient Solution at Th8')
-        legend('t=1','t=1000',Location="best")
-
-        %saving figures
-        fname = sprintf('analytical_transient.png');
-        saveas(gcf,fname,'png')
+        % %plotting u(x,t) vs n
+        % figure;
+        % plot((0:10),u1,LineWidth=2)
+        % hold on;
+        % grid on;
+        % plot((0:10),u2,LineWidth=2)
+        % xlabel('n')
+        % ylabel('u(x,t) [deg C]')
+        % title('Transient Solution at Th8')
+        % legend('t=1','t=1000',Location="best")
+        % 
+        % %saving figures
+        % fname = sprintf('analytical_transient.png');
+        % saveas(gcf,fname,'png')
 
         %% Part 2 Task 2
         %chosen n value: n=4
@@ -191,22 +191,22 @@ for i=1:5
        
         end
 
-        %plotting u(x,t) against all tc loc
-        figure();
-        hold on;
-        grid on;
-        for tc=1:length(tc_loc)
-            plot(time,u_Al_25(:,tc),'k',LineWidth=2)
-            plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        end
-        xlabel("time (s)")
-        ylabel("u [°C]")
-        title("Aluminium 25V")
-        legend("Model","Exp",Location='best')
-
-        %saving figures
-        fname = sprintf('Part2_Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
-        saveas(gcf,fname,'png')
+        % %plotting u(x,t) against all tc loc
+        % figure();
+        % hold on;
+        % grid on;
+        % for tc=1:length(tc_loc)
+        %     plot(time,u_Al_25(:,tc),'k',LineWidth=2)
+        %     plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
+        % end
+        % xlabel("time (s)")
+        % ylabel("u [°C]")
+        % title("Aluminium 25V")
+        % legend("Model","Exp",Location='best')
+        % 
+        % %saving figures
+        % fname = sprintf('Part2_Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
+        % saveas(gcf,fname,'png')
 
         %% Part 2 Task 3
         %chosen n value: n=4
@@ -242,12 +242,73 @@ for i=1:5
         end
         xlabel("time (s)")
         ylabel("u [°C]")
-        title("Aluminium 25V")
+        title("Part 2 Task 3 Aluminium 25V")
+        legend("Model","Exp",Location='best')
+
+        % %saving figures
+        % fname = sprintf('Part2_Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
+        % saveas(gcf,fname,'png')
+
+        %% Part 3 Task 1
+        %change alpha (thermal diffusivity)
+        %up to us to decide how much we want to change 
+        %run model 1b for different alpha values
+        %5 new values for alpha that make each case betetr
+        %try to minimize error across all 8 TC
+        %rmse across all TC for all time to get one singular value of error
+
+        new_alpha = linspace(0.8*alpha(i),1.2*alpha(i),length(time));
+
+        time = data(:,1);
+        time = time(1:end-2);
+        series = zeros(length(time),length(tc_loc),5);
+        for t=1:length(time) % over time 
+            for tc=1:length(tc_loc)% each x of thermocouple
+                for n=1:4 %for n
+                    %calculate b_n
+                    new_b_n(n) = (((-1).^n).*8.*rod_length.*H_exp(i))./((pi.^2).*(((2.*(n))-1).^2));
+                    %calculate lambda_n
+                    new_lambda_n(n) = (((2*n)-1)*pi)/(2*rod_length);
+                    %calculate series
+                    series(t,tc,n+1) = series(t,tc,n) + (new_b_n(n).*sin(new_lambda_n(n).*tc_loc(tc)).*exp(-1.*(new_lambda_n(n).^2).*new_alpha(t).*(time(t))));
+                end
+                series = series(:,:,end);
+                new_u_Al_25(t,tc) = (T0(i) + (H_exp(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
+                
+            end
+       
+        end
+
+        %plotting u(x,t) against all tc loc
+        figure;
+        hold on;
+        grid on;
+        for tc=1:length(tc_loc)
+            plot(time,new_u_Al_25(:,tc),'k',LineWidth=2)
+            plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
+        end
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title(" 20% alpha Part 3 Task 1 Aluminium 25V")
         legend("Model","Exp",Location='best')
 
         %saving figures
         fname = sprintf('Part2_Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
+
+        %RMSE
+        rmse_alpha = rmse(new_u_Al_25,u_Al_25);
+        min_rmse_alpha = min(rmse_alpha);
+        index_min_rmse = find(rmse_alpha == min_rmse_alpha);
+        best_u = new_u_Al_25(index_min_rmse);
+        best_alpha = new_alpha(index_min_rmse);
+        
+        %% Part 3 Task 2
+        %look at gradient func or diff func to find the steady state value
+
+        %% Part 3 Task 3
+        %5 plots: experimental cases, 8th Tc with error bars, all models
+        %fill command: continuous error bars
 
         %% Part 2 Task 4
         %chosen n value: n=4
