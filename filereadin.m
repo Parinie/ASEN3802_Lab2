@@ -250,28 +250,30 @@ for i=1:5
         % saveas(gcf,fname,'png')
 
         %% Part 3 Task 1
-
-        new_alpha = linspace(0.8*alpha(i),1.2*alpha(i),length(time));
-
-        time = data(:,1);
-        time = time(1:end-2);
-        series = zeros(length(time),length(tc_loc),5);
-        for t=1:length(time) % over time 
-            for tc=1:length(tc_loc)% each x of thermocouple
-                for n=1:4 %for n
-                    %calculate b_n
-                    new_b_n(n) = (((-1).^n).*8.*rod_length.*H_exp(i))./((pi.^2).*(((2.*(n))-1).^2));
-                    %calculate lambda_n
-                    new_lambda_n(n) = (((2*n)-1)*pi)/(2*rod_length);
-                    %calculate series
-                    series(t,tc,n+1) = series(t,tc,n) + (new_b_n(n).*sin(new_lambda_n(n).*tc_loc(tc)).*exp(-1.*(new_lambda_n(n).^2).*new_alpha(t).*(time(t))));
+        model = data(1:end-2,end);
+        new_alpha = linspace(0.8*alpha(i), 1.2*alpha(i), 10);
+        time = data(1:end-2,1);
+        series = zeros(length(time), length(tc_loc), length(new_alpha));
+        new_u_Al_25 = zeros(length(time), length(tc_loc), length(new_alpha));
+        rmse_alpha = zeros(length(tc_loc), length(new_alpha));
+        
+        for tc = 1:length(tc_loc) % each thermocouple
+            for index_alpha = 1:length(new_alpha)
+                sum_series = zeros(length(time),1);
+                for n = 1:4
+                    b_n = ((-1)^n * 8 * rod_length * H_exp(i)) / (pi^2 * ((2*n-1)^2));
+                    lambda_n = ((2*n-1) * pi) / (2*rod_length);
+                    sum_series = sum_series + b_n * sin(lambda_n * tc_loc(tc)) .* exp(-lambda_n^2 * new_alpha(index_alpha) .* time);
                 end
-                series = series(:,:,end);
-                new_u_Al_25(t,tc) = (T0(i) + (H_exp(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
-                
+                series(:,tc,index_alpha) = sum_series;
+                new_u_Al_25(:,tc,index_alpha) = T0(i) + H_exp(i) * tc_loc(tc) + sum_series - 273.15;
+                rmse_alpha(tc,index_alpha) = rmse(new_u_Al_25(:,tc,index_alpha), model);
             end
-       
         end
+        
+        % Find best alpha per thermocouple
+        [~, index_min_rmse] = min(rmse_alpha, [], 2);
+        best_alpha(i,:) = new_alpha(index_min_rmse); % 1 per thermocouple
 
         %plotting u(x,t) against all tc loc
         figure;
@@ -289,11 +291,6 @@ for i=1:5
         %saving figures
         fname = sprintf('Part3_Task1_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
-
-        %RMSE
-        rmse_alpha = rmse(new_u_Al_25(:,end),data(1:end-2,end));
-        index_min_rmse = find(rmse_alpha == (min(rmse_alpha)));
-        best_alpha(i) = new_alpha(index_min_rmse);
         
         
         %% Part 3 Task 2
