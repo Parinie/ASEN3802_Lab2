@@ -173,6 +173,8 @@ for i=1:5
         % saveas(gcf,fname,'png')
 
         %% Part 2 Task 2
+
+        %NOW PART 3 TASK 3
         %chosen n value: n=4
 
         time = data(:,1);
@@ -196,22 +198,22 @@ for i=1:5
        
         end
 
-        % %plotting u(x,t) against all tc loc
-        % figure();
-        % hold on;
-        % grid on;
-        % for tc=1:length(tc_loc)
-        %     plot(time,u_Al_25(:,tc),'k',LineWidth=2)
-        %     plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        % end
-        % xlabel("time (s)")
-        % ylabel("u [°C]")
-        % title("Aluminium 25V")
-        % legend("Model","Exp",Location='best')
-        % 
-        % %saving figures
-        % fname = sprintf('Part2_Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
+        %plotting u(x,t) against all tc loc
+        temp_err = 2;
+        figure();
+        hold on;
+        grid on;
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_Al_25(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title("Aluminium 25V")
+        legend("Error","Model 1A","Exp",Location='best')
+
+        %saving figures
+        fname = sprintf('Part3_Task3_Model_1A_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
         %% Part 2 Task 3
         %chosen n value: n=4
@@ -238,21 +240,20 @@ for i=1:5
         end
 
         %plotting u(x,t) against all tc loc
-        figure;
+        figure();
         hold on;
         grid on;
-        for tc=1:length(tc_loc)
-            plot(time,u_Al_25(:,tc),'k',LineWidth=2)
-            plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        end
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_Al_25(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
         xlabel("time (s)")
         ylabel("u [°C]")
-        title("Part 2 Task 3 Aluminium 25V")
-        legend("Model","Exp",Location='best')
+        title("Aluminum 25V")
+        legend("Error","Model 1B","Exp",Location='best')
 
-        % %saving figures
-        % fname = sprintf('Part2_Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
+        %saving figures
+        fname = sprintf('Part3_Task3_Model_1B_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
         %% Part 3 Task 1
 
@@ -297,7 +298,7 @@ for i=1:5
         end
 
         %plotting u(x,t) against all tc loc
-        figure;
+        figure();
         hold on;
         grid on;
         for tc=1:length(tc_loc)
@@ -337,25 +338,35 @@ for i=1:5
 
         temp_err = 2; %+-2 deg
 
+        %Model 1A
+        %Done in Part 2 Task 2
+
+        %Model 1B
+        %Done in Part 2 Task 3
+
+        %Model 2
+        %Done in Part 2 Task 4
+        
+        %Model 3
         %plotting u(x,t) against 8th TC
-        figure;
+        figure();
         hold on;
         grid on;
-        fill([time; flipud(time)],[u_Al_25_adj(:,end) - temp_err; flipud(u_Al_25_adj(:,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
         plot(time,u_Al_25_adj(:,end),'k',LineWidth=2)
         plot(time,data(1:end-2,end),'r',LineWidth=2)
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Aluminium 25V")
-        legend("Error","Model","Exp",Location='best')
+        legend("Error","Model 3","Exp",Location='best')
 
         %saving figures
-        fname = sprintf('Part3_Task3_A_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part3_Task3_Model_3_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
 
         %% Part 2 Task 4
-        %chosen n value: n=4
+        %NOW PART 3 TASK 3
 
         time = data(:,1);
         time = time(1:end-2);
@@ -378,22 +389,22 @@ for i=1:5
        
         end
 
-        % %plotting u(x,t) against all tc loc
-        % figure;
-        % hold on;
-        % grid on;
-        % for tc=1:length(tc_loc)
-        %     plot(time,u_Al_25(:,tc),'k',LineWidth=2)
-        %     plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        % end
-        % xlabel("time (s)")
-        % ylabel("u [°C]")
-        % title("Aluminium 25V")
-        % legend("Model","Exp",Location='best')
-        % 
-        % %saving figures
-        % fname = sprintf('Part2_Task4_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
+        %plotting u(x,t) against all tc loc
+        temp_err = 2;
+        figure();
+        hold on;
+        grid on;
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_Al_25(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title("Aluminium 25V")
+        legend("Error","Model 2","Exp",Location='best')
+
+        %saving figures
+        fname = sprintf('Part3_Task3_Model_2_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
     elseif (b{1} == "Aluminum") && (b{2} == "30V") && (b{3} == "290mA")
         %Task 1
@@ -405,7 +416,7 @@ for i=1:5
 
         %steady state temp
         steady_temp = [data(end-2,2:9)]+273.15; %K
-        
+
         %fitting
         [p1,S1] = polyfit(tc_loc,steady_temp,1);
         [y1,delta1] = polyval(p1,l_steady,S1);
@@ -500,27 +511,27 @@ for i=1:5
                 end
                 series = series(:,:,end);
                 u_Al_30(t,tc) = (T0(i) + (H_an(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
-                
+
             end
-       
+
         end
 
-        % %plotting u(x,t) against all tc loc
-        % figure();
-        % hold on;
-        % grid on;
-        % for tc=1:length(tc_loc)
-        %     plot(time,u_Al_30(:,tc),'k',LineWidth=2)
-        %     plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        % end
-        % xlabel("time (s)")
-        % ylabel("u [°C]")
-        % sgtitle("Aluminium 30V")
-        % legend("Model","Exp",Location='best')
-        % 
-        % %saving figures
-        % fname = sprintf('Part2_Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
+        %plotting u(x,t) against all tc loc
+        temp_err = 2;
+        figure();
+        hold on;
+        grid on;
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_Al_30(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title("Aluminium 30V")
+        legend("Model 1A","Exp",Location='best')
+
+        %saving figures
+        fname = sprintf('Part3_Task3_Model_1A_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
         %% Part 2 Task 3
         %chosen n value: n=4
@@ -541,27 +552,26 @@ for i=1:5
                 end
                 series = series(:,:,end);
                 u_Al_30(t,tc) = (T0(i) + (H_exp(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
-                
+
             end
-       
+
         end
 
         %plotting u(x,t) against all tc loc
         figure;
         hold on;
         grid on;
-        for tc=1:length(tc_loc)
-            plot(time,u_Al_30(:,tc),'k',LineWidth=2)
-            plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        end
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_Al_30(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Aluminium 30V")
-        legend("Model","Exp",Location='best')
+        legend("Model 1B","Exp",Location='best')
 
-        % %saving figures
-        % fname = sprintf('Part2_Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
+        %saving figures
+        fname = sprintf('Part3_Task3_Model_1B_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
         %% Part 3 Task 1
 
@@ -571,7 +581,7 @@ for i=1:5
         series = zeros(length(time), length(tc_loc), length(new_alpha));
         new_u_Al_30 = zeros(length(time), length(tc_loc), length(new_alpha));
         rmse_alpha = zeros(length(tc_loc), length(new_alpha));
-        
+
         for tc = 1:length(tc_loc) % each thermocouple
             for index_alpha = 1:length(new_alpha)
                 sum_series = zeros(length(time),1);
@@ -585,7 +595,7 @@ for i=1:5
                 rmse_alpha(tc,index_alpha) = rmse(new_u_Al_30(:,tc,index_alpha), model);
             end
         end
-        
+
         % Find best alpha per thermocouple
         [~, index_min_rmse] = min(rmse_alpha, [], 2);
         best_alpha(i,:) = new_alpha(index_min_rmse); % 1 per thermocouple
@@ -655,14 +665,14 @@ for i=1:5
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Aluminium 30V")
-        legend("Error","Model","Exp",Location='best')
+        legend("Error","Model 3","Exp",Location='best')
 
         %saving figures
-        fname = sprintf('Part3_Task3_A_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part3_Task3_Model_3_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
         %% Part 2 Task 4
-        %chosen n value: n=4
+        %NOW PART 3 TASK 3
 
         time = data(:,1);
         time = time(1:end-2);
@@ -680,27 +690,26 @@ for i=1:5
                 end
                 series = series(:,:,end);
                 u_Al_30(t,tc) = (T0(i) + ((H_exp(i)-M_exp(i)).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
-                
+
             end
-       
+
         end
 
         %plotting u(x,t) against all tc loc
-        % figure;
-        % hold on;
-        % grid on;
-        % for tc=1:length(tc_loc)
-        %     plot(time,u_Al_30(:,tc),'k',LineWidth=2)
-        %     plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        % end
-        % xlabel("time (s)")
-        % ylabel("u [°C]")
-        % title("Aluminium 30V")
-        % legend("Model","Exp",Location='best')
-        % 
-        % %saving figures
-        % fname = sprintf('Part2_Task4_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
+        figure;
+        hold on;
+        grid on;
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_Al_30(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title("Aluminium 30V")
+        legend("Model 2","Exp",Location='best')
+
+        %saving figures
+        fname = sprintf('Part3_Task3_Model_2_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
     elseif (b{1} == "Brass") && (b{2} == "25V") && (b{3} == "237mA")
         %Task 1
@@ -712,7 +721,7 @@ for i=1:5
 
         %steady state temp
         steady_temp = [data(end-2,2:9)]+273.15; %K
-        
+
         %fitting
         [p1,S1] = polyfit(tc_loc,steady_temp,1);
         [y1,delta1] = polyval(p1,l_steady,S1);
@@ -808,27 +817,26 @@ for i=1:5
                 end
                 series = series(:,:,end);
                 u_Br_25(t,tc) = (T0(i) + (H_an(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
-                
+
             end
-       
+
         end
 
-        % %plotting u(x,t) against all tc loc
-        % figure();
-        % hold on;
-        % grid on;
-        % for tc=1:length(tc_loc)
-        %     plot(time,u_Br_25(:,tc),'k',LineWidth=2)
-        %     plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        % end
-        % xlabel("time (s)")
-        % ylabel("u [°C]")
-        % title("Brass 25V")
-        % legend("Model","Exp",Location='best')
-        % 
-        % %saving figures
-        % fname = sprintf('Part2_Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
+        %plotting u(x,t) against all tc loc
+        figure();
+        hold on;
+        grid on;
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_Br_25(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title("Brass 25V")
+        legend("Error","Model 1A","Exp",Location='best')
+
+        %saving figures
+        fname = sprintf('Part3_Task3_Model_1A_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
         %% Part 2 Task 3
         %chosen n value: n=4
@@ -849,27 +857,26 @@ for i=1:5
                 end
                 series = series(:,:,end);
                 u_Br_25(t,tc) = (T0(i) + (H_exp(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
-                
+
             end
-       
+
         end
 
         %plotting u(x,t) against all tc loc
         figure;
         hold on;
         grid on;
-        for tc=1:length(tc_loc)
-            plot(time,u_Br_25(:,tc),'k',LineWidth=2)
-            plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        end
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_Br_25(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Brass 25V")
-        legend("Model","Exp",Location='best')
+        legend("Error","Model 1B","Exp",Location='best')
 
         % %saving figures
-        % fname = sprintf('Part2_Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
+        fname = sprintf('Part3_Task3_Model_1B_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
         %% Part 3 Task 1
 
@@ -879,7 +886,7 @@ for i=1:5
         series = zeros(length(time), length(tc_loc), length(new_alpha));
         new_u_Br_25 = zeros(length(time), length(tc_loc), length(new_alpha));
         rmse_alpha = zeros(length(tc_loc), length(new_alpha));
-        
+
         for tc = 1:length(tc_loc) % each thermocouple
             for index_alpha = 1:length(new_alpha)
                 sum_series = zeros(length(time),1);
@@ -893,7 +900,7 @@ for i=1:5
                 rmse_alpha(tc,index_alpha) = rmse(new_u_Br_25(:,tc,index_alpha), model);
             end
         end
-        
+
         % Find best alpha per thermocouple
         [~, index_min_rmse] = min(rmse_alpha, [], 2);
         best_alpha(i,:) = new_alpha(index_min_rmse); % 1 per thermocouple
@@ -963,10 +970,10 @@ for i=1:5
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Brass 25V")
-        legend("Error","Model","Exp",Location='best')
+        legend("Error","Model 3","Exp",Location='best')
 
         %saving figures
-        fname = sprintf('Part3_Task3_A_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part3_Task3_Model_3_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
         %% Part 2 Task 4
@@ -988,28 +995,27 @@ for i=1:5
                 end
                 series = series(:,:,end);
                 u_Br_25(t,tc) = (T0(i) + ((H_exp(i)-M_exp(i)).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
-                
+
             end
-       
+
         end
 
-        % %plotting u(x,t) against all tc loc
-        % figure;
-        % hold on;
-        % grid on;
-        % for tc=1:length(tc_loc)
-        %     plot(time,u_Br_25(:,tc),'k',LineWidth=2)
-        %     plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        % end
-        % xlabel("time (s)")
-        % ylabel("u [°C]")
-        % title("Brass 25V")
-        % legend("Model","Exp",Location='best')
-        % 
-        % %saving figures
-        % fname = sprintf('Part2_Task4_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
-        
+        %plotting u(x,t) against all tc loc
+        figure;
+        hold on;
+        grid on;
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_Br_25(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title("Brass 25V")
+        legend("Error","Model 2","Exp",Location='best')
+
+        %saving figures
+        fname = sprintf('Part3_Task3_Model_2_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
+
     elseif (b{1} == "Brass") && (b{2} == "30V") && (b{3} == "285mA")
         %Task 1
         %NOTE: Polyfit gives 2 arguments: first is slope and second is
@@ -1020,7 +1026,7 @@ for i=1:5
 
         %steady state temp
         steady_temp = [data(end-2,2:9)]+273.15; %K
-        
+
         %fitting
         [p1,S1] = polyfit(tc_loc,steady_temp,1);
         [y1,delta1] = polyval(p1,l_steady,S1);
@@ -1115,27 +1121,26 @@ for i=1:5
                 end
                 series = series(:,:,end);
                 u_Br_30(t,tc) = (T0(i) + (H_an(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
-                
+
             end
-       
+
         end
 
-        % %plotting u(x,t) against all tc loc
-        % figure();
-        % hold on;
-        % grid on;
-        % for tc=1:length(tc_loc)
-        %     plot(time,u_Br_30(:,tc),'k',LineWidth=2)
-        %     plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        % end
-        % xlabel("time (s)")
-        % ylabel("u [°C]")
-        % sgtitle("Brass 30V")
-        % legend("Model","Exp",Location='best')
-        % 
-        % %saving figures
-        % fname = sprintf('Part2_Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
+        %plotting u(x,t) against all tc loc
+        figure();
+        hold on;
+        grid on;
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_Br_30(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title("Brass 30V")
+        legend("Error","Model 1A","Exp",Location='best')
+
+        %saving figures
+        fname = sprintf('Part3_Task3__Model_1A_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
         %% Part 2 Task 3
         %chosen n value: n=4
@@ -1156,27 +1161,26 @@ for i=1:5
                 end
                 series = series(:,:,end);
                 u_Br_30(t,tc) = (T0(i) + (H_exp(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
-                
+
             end
-       
+
         end
 
         %plotting u(x,t) against all tc loc
         figure;
         hold on;
         grid on;
-        for tc=1:length(tc_loc)
-            plot(time,u_Br_30(:,tc),'k',LineWidth=2)
-            plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        end
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_Br_30(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Brass 30V")
-        legend("Model","Exp",Location='best')
+        legend("Error","Model 1B","Exp",Location='best')
 
-        % %saving figures
-        % fname = sprintf('Part2_Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
+        %saving figures
+        fname = sprintf('Part3_Task3_Model_1B_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
         %% Part 3 Task 1
 
@@ -1186,7 +1190,7 @@ for i=1:5
         series = zeros(length(time), length(tc_loc), length(new_alpha));
         new_u_Br_30 = zeros(length(time), length(tc_loc), length(new_alpha));
         rmse_alpha = zeros(length(tc_loc), length(new_alpha));
-        
+
         for tc = 1:length(tc_loc) % each thermocouple
             for index_alpha = 1:length(new_alpha)
                 sum_series = zeros(length(time),1);
@@ -1200,7 +1204,7 @@ for i=1:5
                 rmse_alpha(tc,index_alpha) = rmse(new_u_Br_30(:,tc,index_alpha), model);
             end
         end
-        
+
         % Find best alpha per thermocouple
         [~, index_min_rmse] = min(rmse_alpha, [], 2);
         best_alpha(i,:) = new_alpha(index_min_rmse); % 1 per thermocouple
@@ -1270,10 +1274,10 @@ for i=1:5
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Brass 30V")
-        legend("Error","Model","Exp",Location='best')
+        legend("Error","Model 3","Exp",Location='best')
 
         %saving figures
-        fname = sprintf('Part3_Task3_A_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part3_Task3_Model_3_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
         %% Part 2 Task 4
@@ -1295,27 +1299,26 @@ for i=1:5
                 end
                 series = series(:,:,end);
                 u_Br_30(t,tc) = (T0(i) + ((H_exp(i)-M_exp(i)).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
-                
+
             end
-       
+
         end
 
-        % %plotting u(x,t) against all tc loc
-        % figure;
-        % hold on;
-        % grid on;
-        % for tc=1:length(tc_loc)
-        %     plot(time,u_Br_30(:,tc),'k',LineWidth=2)
-        %     plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        % end
-        % xlabel("time (s)")
-        % ylabel("u [°C]")
-        % title("Brass 30V")
-        % legend("Model","Exp",Location='best')
-        % 
-        % %saving figures
-        % fname = sprintf('Part2_Task4_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
+        %plotting u(x,t) against all tc loc
+        figure;
+        hold on;
+        grid on;
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_Br_30(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title("Brass 30V")
+        legend("Error","Model 2","Exp",Location='best')
+
+        %saving figures
+        fname = sprintf('Part3_Task3_Model_2_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
     elseif (b{1} == "Steel") && (b{2} == "22V") && (b{3} == "203mA")
         %Task 1
@@ -1327,7 +1330,7 @@ for i=1:5
 
         %steady state temp
         steady_temp = [data(end-2,2:9)]+273.15; %K
-        
+
         %fitting
         [p1,S1] = polyfit(tc_loc,steady_temp,1);
         [y1,delta1] = polyval(p1,l_steady,S1);
@@ -1422,27 +1425,26 @@ for i=1:5
                 end
                 series = series(:,:,end);
                 u_St_22(t,tc) = (T0(i) + (H_an(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
-                
+
             end
-       
+
         end
 
-        % %plotting u(x,t) against all tc loc
-        % figure();
-        % hold on;
-        % grid on;
-        % for tc=1:length(tc_loc)
-        %     plot(time,u_St_22(:,tc),'k',LineWidth=2)
-        %     plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        % end
-        % xlabel("time (s)")
-        % ylabel("u [°C]")
-        % sgtitle("Steel 22V")
-        % legend("Model","Exp",Location='best')
-        % 
-        % %saving figures
-        % fname = sprintf('Part2_Task2_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
+        %plotting u(x,t) against all tc loc
+        figure();
+        hold on;
+        grid on;
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_St_22(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title("Steel 22V")
+        legend("Error","Model 1A","Exp",Location='best')
+
+        %saving figures
+        fname = sprintf('Part3_Task3_Model_1A_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
         %% Part 2 Task 3
         %chosen n value: n=4
@@ -1463,27 +1465,26 @@ for i=1:5
                 end
                 series = series(:,:,end);
                 u_St_22(t,tc) = (T0(i) + (H_exp(i).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
-                
+
             end
-       
+
         end
 
         %plotting u(x,t) against all tc loc
         figure;
         hold on;
         grid on;
-        for tc=1:length(tc_loc)
-            plot(time,u_St_22(:,tc),'k',LineWidth=2)
-            plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        end
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_St_22(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Steel 22V")
-        legend("Model","Exp",Location='best')
+        legend("Error","Model 1B","Exp",Location='best')
 
-        % %saving figures
-        % fname = sprintf('Part2_Task3_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
+        %saving figures
+        fname = sprintf('Part3_Task3_Model_1B_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
 
         %% Part 3 Task 1
 
@@ -1493,7 +1494,7 @@ for i=1:5
         series = zeros(length(time), length(tc_loc), length(new_alpha));
         new_u_St_22 = zeros(length(time), length(tc_loc), length(new_alpha));
         rmse_alpha = zeros(length(tc_loc), length(new_alpha));
-        
+
         for tc = 1:length(tc_loc) % each thermocouple
             for index_alpha = 1:length(new_alpha)
                 sum_series = zeros(length(time),1);
@@ -1507,7 +1508,7 @@ for i=1:5
                 rmse_alpha(tc,index_alpha) = rmse(new_u_St_22(:,tc,index_alpha), model);
             end
         end
-        
+
         % Find best alpha per thermocouple
         [~, index_min_rmse] = min(rmse_alpha, [], 2);
         best_alpha(i,:) = new_alpha(index_min_rmse); % 1 per thermocouple
@@ -1577,10 +1578,10 @@ for i=1:5
         xlabel("time (s)")
         ylabel("u [°C]")
         title("Steel 22V")
-        legend("Error","Model","Exp",Location='best')
+        legend("Error","Model 3","Exp",Location='best')
 
         %saving figures
-        fname = sprintf('Part3_Task3_A_%s_%s_%s.png', b{1}, b{2}, b{3});
+        fname = sprintf('Part3_Task3_Model_3_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
         %% Part 2 Task 4
@@ -1602,28 +1603,27 @@ for i=1:5
                 end
                 series = series(:,:,end);
                 u_St_22(t,tc) = (T0(i) + ((H_exp(i)-M_exp(i)).*tc_loc(tc)) + series(t,tc)) - 273.15; %convert to degC
-                
+
             end
-       
+
         end
 
-        % %plotting u(x,t) against all tc loc
-        % figure;
-        % hold on;
-        % grid on;
-        % for tc=1:length(tc_loc)
-        %     plot(time,u_St_22(:,tc),'k',LineWidth=2)
-        %     plot(time,data(1:end-2,tc+1),'r',LineWidth=2)
-        % end
-        % xlabel("time (s)")
-        % ylabel("u [°C]")
-        % title("Steel 22V")
-        % legend("Model","Exp",Location='best')
-        % 
-        % %saving figures
-        % fname = sprintf('Part2_Task4_%s_%s_%s.png', b{1}, b{2}, b{3});
-        % saveas(gcf,fname,'png')
-        
+        %plotting u(x,t) against all tc loc
+        figure;
+        hold on;
+        grid on;
+        fill([time; flipud(time)],[data(1:end-2,end) - temp_err; flipud(data(1:end-2,end) + temp_err)], [0.9 0.9 0.9], 'linestyle', 'none'); 
+        plot(time,u_St_22(:,end),'k',LineWidth=2)
+        plot(time,data(1:end-2,end),'r',LineWidth=2)
+        xlabel("time (s)")
+        ylabel("u [°C]")
+        title("Steel 22V")
+        legend("Error","Model 2","Exp",Location='best')
+
+        %saving figures
+        fname = sprintf('Part3_Task3_Model_2_%s_%s_%s.png', b{1}, b{2}, b{3});
+        saveas(gcf,fname,'png')
+
     else
         disp("Error: Incorrect material properties")
     end
