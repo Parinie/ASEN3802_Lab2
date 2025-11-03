@@ -317,6 +317,20 @@ for i=1:5
         %% Part 3 Task 2
         %look at gradient func or diff func to find the steady state value
 
+        %only looking at 8th TC
+        u_Al_25_adj = u_Al_25_adj(:,end);
+        u_Al_25_adj_steady = u_Al_25_adj(end);
+
+
+        %finding steady state time where temp reaches 98% of steady state
+        %value
+        t_steady = time(u_Al_25_adj>=(0.98 *u_Al_25_adj_steady));
+        t_ss(i) = t_steady(1);
+
+        %calculating F0
+        L = 0.149225; %m
+        F_0(i) = (alpha_adj(i) * t_ss(i)) / (L^2);
+
         %% Part 3 Task 3
         %5 plots: experimental cases, 8th Tc with error bars, all models
         %fill command: continuous error bars
@@ -589,6 +603,23 @@ for i=1:5
         fname = sprintf('Part3_Task1_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
+        %% Part 3 Task 2
+        %look at gradient func or diff func to find the steady state value
+
+        %only looking at 8th TC
+        u_Al_30_adj = u_Al_30_adj(:,end);
+        u_Al_30_adj_steady = u_Al_30_adj(end);
+
+
+        %finding steady state time where temp reaches 98% of steady state
+        %value
+        t_steady = time(u_Al_30_adj>=(0.98 *u_Al_30_adj_steady));
+        t_ss(i) = t_steady(1);
+
+        %calculating F0
+        L = 0.149225; %m
+        F_0(i) = (alpha_adj(i) * t_ss(i)) / (L^2);
+
         %% Part 2 Task 4
         %chosen n value: n=4
 
@@ -858,6 +889,23 @@ for i=1:5
         fname = sprintf('Part3_Task1_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
+        %% Part 3 Task 2
+        %look at gradient func or diff func to find the steady state value
+
+        %only looking at 8th TC
+        u_Br_25_adj = u_Br_25_adj(:,end);
+        u_Br_25_adj_steady = u_Br_25_adj(end);
+
+
+        %finding steady state time where temp reaches 98% of steady state
+        %value
+        t_steady = time(u_Br_25_adj>=(0.98 *u_Br_25_adj_steady));
+        t_ss(i) = t_ss(1);
+
+        %calculating F0
+        L = 0.149225; %m
+        F_0(i) = (alpha_adj(i) * t_ss(i)) / (L^2);
+
         %% Part 2 Task 4
         %chosen n value: n=4
 
@@ -1126,6 +1174,23 @@ for i=1:5
         fname = sprintf('Part3_Task1_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
 
+        %% Part 3 Task 2
+        %look at gradient func or diff func to find the steady state value
+
+        %only looking at 8th TC
+        u_Br_30_adj = u_Br_30_adj(:,end);
+        u_Br_30_adj_steady = u_Br_30_adj(end);
+
+
+        %finding steady state time where temp reaches 98% of steady state
+        %value
+        t_steady = time(u_Br_30_adj>=(0.98 *u_Br_30_adj_steady));
+        t_ss(i) = t_steady(1);
+
+        %calculating F0
+        L = 0.149225; %m
+        F_0(i) = (alpha_adj(i) * t_ss(i)) / (L^2);
+
         %% Part 2 Task 4
         %chosen n value: n=4
 
@@ -1393,6 +1458,23 @@ for i=1:5
         %saving figures
         fname = sprintf('Part3_Task1_%s_%s_%s.png', b{1}, b{2}, b{3});
         saveas(gcf,fname,'png')
+
+        %% Part 3 Task 2
+        %look at gradient func or diff func to find the steady state value
+
+        %only looking at 8th TC
+        u_St_22_adj = u_St_22_adj(:,end);
+        u_St_22_adj_steady = u_St_22_adj(end);
+
+
+        %finding steady state time where temp reaches 98% of steady state
+        %value
+        t_steady = time(u_St_22_adj>=(0.98 *u_St_22_adj_steady));
+        t_ss(i) = t_steady(1);
+
+        %calculating F0
+        L = 0.149225; %m
+        F_0(i) = (alpha_adj(i) * t_ss(i)) / (L^2);
 
         %% Part 2 Task 4
         %chosen n value: n=4
